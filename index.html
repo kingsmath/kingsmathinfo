@@ -1,0 +1,2414 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>킹수학을 소개합니다</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --king-yellow: #FFD600;
+      --king-blue: #2563eb;
+      --king-purple: #7c3aed;
+      --king-pink: #FF2D78;
+      --king-cyan: #00E5FF;
+      --king-dark: #070714;
+      --king-card: #10102a;
+      --grid-line: rgba(255, 255, 255, 0.035);
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 72px;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: var(--king-dark);
+      color: #e8e8f0;
+      overflow-x: hidden;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* 본문 기본 가독성 — 굵은 폰트에서 획 겹침 방지 */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      font-family: 'Noto Sans KR', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      letter-spacing: -0.3px;
+      color: #ffffff;
+    }
+
+    /* display용 Bebas는 영문·숫자에만 */
+    .display-font {
+      font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 7, 20, 0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 214, 0, 0.18);
+      padding: 0 2rem;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      height: 38px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(255, 214, 0, 0.5));
+      animation: pulse-logo-nav 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse-logo-nav {
+
+      0%,
+      100% {
+        filter: drop-shadow(0 0 6px rgba(255, 214, 0, 0.4));
+      }
+
+      50% {
+        filter: drop-shadow(0 0 16px rgba(255, 214, 0, 0.8));
+      }
+    }
+
+    .nav-logo-text {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--king-yellow);
+      letter-spacing: -0.3px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--king-yellow);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 20px;
+      border-radius: 999px;
+      background: var(--king-yellow);
+      color: #080818;
+      font-weight: 900;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 18px rgba(255, 214, 0, 0.35);
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 28px rgba(255, 214, 0, 0.55);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 7rem 2rem 4rem;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+    }
+
+    .orb-1 {
+      width: 560px;
+      height: 560px;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.4) 0%, transparent 70%);
+      top: -80px;
+      right: -80px;
+      animation: float-orb 9s ease-in-out infinite;
+    }
+
+    .orb-2 {
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(255, 45, 120, 0.25) 0%, transparent 70%);
+      bottom: 0;
+      left: -80px;
+      animation: float-orb 11s ease-in-out infinite reverse;
+    }
+
+    .orb-3 {
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(0, 229, 255, 0.18) 0%, transparent 70%);
+      top: 45%;
+      left: 32%;
+      animation: float-orb 13s ease-in-out infinite;
+    }
+
+    @keyframes float-orb {
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+      }
+
+      50% {
+        transform: translateY(-28px) scale(1.04);
+      }
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 2rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border: 1px solid;
+    }
+
+    .badge-gold {
+      background: rgba(255, 214, 0, 0.1);
+      color: var(--king-yellow);
+      border-color: rgba(255, 214, 0, 0.35);
+    }
+
+    .badge-purple {
+      background: rgba(124, 58, 237, 0.15);
+      color: #c4b5fd;
+      border-color: rgba(196, 181, 253, 0.35);
+    }
+
+    .hero-eyebrow {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-title {
+      font-size: clamp(2.6rem, 4.5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .hero-brand {
+      display: block;
+      font-weight: 900;
+      font-size: clamp(4.5rem, 9vw, 7.5rem);
+      letter-spacing: 23px;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(130deg, #FFD600 0%, #FF8C00 38%, #FF2D78 72%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 24px rgba(255, 214, 0, 0.25));
+    }
+
+    .hero-tags {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--king-cyan);
+      letter-spacing: 2.5px;
+      margin-bottom: 1.4rem;
+      text-shadow: 0 0 18px rgba(0, 229, 255, 0.4);
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: rgba(255, 255, 255, 0.62);
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-desc strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .hero-desc .hl {
+      color: var(--king-yellow);
+      font-weight: 700;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 14px;
+      background: var(--king-yellow);
+      color: #080818;
+      font-weight: 900;
+      font-size: 1rem;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 0 28px rgba(255, 214, 0, 0.45), 0 4px 18px rgba(0, 0, 0, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 45%;
+      height: 200%;
+      background: rgba(255, 255, 255, 0.28);
+      transform: skewX(-15deg);
+      transition: left 0.4s;
+    }
+
+    .btn-primary:hover::before {
+      left: 120%;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 44px rgba(255, 214, 0, 0.65), 0 8px 28px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 14px;
+      background: transparent;
+      color: #e8e8f0;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      border: 1.5px solid rgba(255, 255, 255, 0.22);
+      transition: all 0.25s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--king-yellow);
+      color: var(--king-yellow);
+      background: rgba(255, 214, 0, 0.07);
+    }
+
+    /* ── HERO VISUAL ── */
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-mockup {
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 214, 0, 0.18);
+      box-shadow: 0 0 55px rgba(124, 58, 237, 0.35), 0 0 110px rgba(255, 45, 120, 0.12);
+      position: relative;
+      aspect-ratio: 4/3;
+      background: #12102a;
+    }
+
+    .hero-mockup img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 1s ease;
+      display: block;
+    }
+
+    .hero-mockup-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(7, 7, 20, 0.8) 0%, transparent 50%);
+      display: flex;
+      align-items: flex-end;
+      padding: 1.5rem;
+    }
+
+    .hero-mockup-label {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    }
+
+    .floating-stat {
+      position: absolute;
+      background: rgba(10, 10, 30, 0.92);
+      border: 1px solid rgba(255, 214, 0, 0.28);
+      border-radius: 16px;
+      padding: 12px 18px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+    }
+
+    .floating-stat .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--king-yellow);
+      line-height: 1;
+    }
+
+    .floating-stat .stat-label {
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .stat-a {
+      top: -18px;
+      left: -18px;
+      animation: float-stat 5s ease-in-out infinite;
+    }
+
+    .stat-b {
+      bottom: 28px;
+      right: -28px;
+      animation: float-stat 6.5s ease-in-out infinite 1.5s;
+    }
+
+    .stat-c {
+      top: 42%;
+      left: -38px;
+      animation: float-stat 7s ease-in-out infinite 0.5s;
+    }
+
+    @keyframes float-stat {
+
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(-9px)
+      }
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: rgba(255, 214, 0, 0.05);
+      border-top: 1px solid rgba(255, 214, 0, 0.12);
+      border-bottom: 1px solid rgba(255, 214, 0, 0.12);
+    }
+
+    .stats-bar .container {
+      padding-top: 2.5rem;
+      padding-bottom: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-item .num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.2rem;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--king-yellow), #FF8C00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-item .desc {
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.42);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    /* ── SECTION COMMON ── */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: 1px solid;
+      margin-bottom: 1.1rem;
+    }
+
+    .sl-yellow {
+      background: rgba(255, 214, 0, 0.08);
+      color: var(--king-yellow);
+      border-color: rgba(255, 214, 0, 0.3);
+    }
+
+    .sl-cyan {
+      background: rgba(0, 229, 255, 0.06);
+      color: var(--king-cyan);
+      border-color: rgba(0, 229, 255, 0.25);
+    }
+
+    .sl-pink {
+      background: rgba(255, 45, 120, 0.08);
+      color: #ff9ec0;
+      border-color: rgba(255, 45, 120, 0.28);
+    }
+
+    .sl-purple {
+      background: rgba(196, 181, 253, 0.08);
+      color: #c4b5fd;
+      border-color: rgba(196, 181, 253, 0.28);
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 0.9rem;
+      color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.48);
+      line-height: 1.8;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+
+    /* ── HIGHLIGHTS ── */
+    .highlights {
+      background: var(--king-dark);
+    }
+
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 4rem;
+    }
+
+    .hl-card {
+      background: var(--king-card);
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.3, 1.2), box-shadow 0.35s, border-color 0.35s;
+    }
+
+    .hl-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .hl-card:nth-child(1):hover {
+      box-shadow: 0 20px 55px rgba(255, 214, 0, 0.18);
+      border-color: rgba(255, 214, 0, 0.28);
+    }
+
+    .hl-card:nth-child(2):hover {
+      box-shadow: 0 20px 55px rgba(0, 229, 255, 0.13);
+      border-color: rgba(0, 229, 255, 0.28);
+    }
+
+    .hl-card:nth-child(3):hover {
+      box-shadow: 0 20px 55px rgba(196, 181, 253, 0.18);
+      border-color: rgba(196, 181, 253, 0.28);
+    }
+
+    .hl-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hl-content {
+      padding: 2rem;
+    }
+
+    .hl-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .ic-gold {
+      background: rgba(255, 214, 0, 0.12);
+    }
+
+    .ic-cyan {
+      background: rgba(0, 229, 255, 0.09);
+    }
+
+    .ic-purple {
+      background: rgba(196, 181, 253, 0.1);
+    }
+
+    .hl-title {
+      font-size: 1.2rem;
+      font-weight: 900;
+      margin-bottom: 0.7rem;
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .hl-desc {
+      font-size: 0.88rem;
+      line-height: 1.85;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* ── STORY ── */
+    .story {
+      background: linear-gradient(180deg, var(--king-dark) 0%, #0c0c20 100%);
+    }
+
+    .story-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .story-text p {
+      font-size: 0.93rem;
+      line-height: 2;
+      color: rgba(255, 255, 255, 0.58);
+      margin-bottom: 1.4rem;
+    }
+
+    .story-text strong {
+      color: rgba(255, 255, 255, 0.88);
+      font-weight: 700;
+    }
+
+    .story-text a {
+      color: var(--king-yellow);
+      text-decoration: none;
+      font-weight: 700;
+      border-bottom: 1px dashed rgba(255, 214, 0, 0.35);
+      transition: border-color 0.2s;
+    }
+
+    .story-text a:hover {
+      border-color: var(--king-yellow);
+    }
+
+    .github-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 16px;
+      padding: 1.4rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-top: 0.8rem;
+    }
+
+    .github-box h4 {
+      font-size: 0.9rem;
+      font-weight: 800;
+      margin-bottom: 0.35rem;
+      color: #fff;
+    }
+
+    .github-box p {
+      font-size: 0.83rem;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 0.7rem;
+    }
+
+    .github-box a {
+      color: var(--king-cyan) !important;
+      border-bottom-color: rgba(0, 229, 255, 0.28) !important;
+    }
+
+    .story-images {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .story-img-wrap {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      position: relative;
+      height: 276px;
+    }
+
+    .story-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+      display: block;
+    }
+
+    .story-img-wrap:hover img {
+      transform: scale(1.04);
+    }
+
+    .story-img-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1rem 1.2rem;
+      background: linear-gradient(to top, rgba(7, 7, 20, 0.9), transparent);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      background: var(--king-dark);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-top: 3.5rem;
+    }
+
+    .feat-card {
+      background: var(--king-card);
+      border-radius: 18px;
+      padding: 2rem 1.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      text-align: center;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feat-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .feat-card:nth-child(1)::before {
+      background: radial-gradient(circle at 50% 0%, rgba(255, 45, 120, 0.1), transparent 70%);
+    }
+
+    .feat-card:nth-child(2)::before {
+      background: radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.08), transparent 70%);
+    }
+
+    .feat-card:nth-child(3)::before {
+      background: radial-gradient(circle at 50% 0%, rgba(196, 181, 253, 0.1), transparent 70%);
+    }
+
+    .feat-card:nth-child(4)::before {
+      background: radial-gradient(circle at 50% 0%, rgba(255, 214, 0, 0.1), transparent 70%);
+    }
+
+    .feat-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .feat-card:hover::before {
+      opacity: 1;
+    }
+
+    .feat-icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.9rem;
+      display: block;
+    }
+
+    .feat-title {
+      font-size: 1.05rem;
+      font-weight: 900;
+      margin-bottom: 0.65rem;
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .feat-desc {
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: rgba(255, 255, 255, 0.48);
+    }
+
+    .feat-desc strong {
+      color: var(--king-yellow);
+      font-weight: 700;
+    }
+
+    .support-box {
+      margin-top: 3.5rem;
+      background: linear-gradient(135deg, rgba(255, 214, 0, 0.07) 0%, rgba(255, 45, 120, 0.05) 100%);
+      border: 1px solid rgba(255, 214, 0, 0.18);
+      border-radius: 22px;
+      padding: 2.2rem;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .support-box h4 {
+      font-size: 1.05rem;
+      font-weight: 900;
+      margin-bottom: 0.45rem;
+      color: #fff;
+    }
+
+    .support-box p {
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: rgba(255, 255, 255, 0.5);
+      max-width: 500px;
+    }
+
+    .support-box strong {
+      color: var(--king-yellow);
+    }
+
+    /* ── MUSIC ── */
+    .music {
+      background: linear-gradient(180deg, #0c0c20 0%, #0e0020 100%);
+    }
+
+    .music-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+      margin-top: 3.5rem;
+    }
+
+    .music-card {
+      background: var(--king-card);
+      border-radius: 22px;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .music-card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-bottom: 1.1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 1.1rem;
+    }
+
+    .music-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+
+    .mi-blue {
+      background: rgba(37, 99, 235, 0.18);
+    }
+
+    .mi-green {
+      background: rgba(0, 200, 100, 0.13);
+    }
+
+    .music-card-header h3 {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .music-card-header p {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.38);
+      margin-top: 3px;
+    }
+
+    .music-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .music-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 13px;
+      border-radius: 11px;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .music-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.07);
+    }
+
+    .music-item span {
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .play-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 13px;
+      border-radius: 8px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .pb-blue {
+      background: rgba(37, 99, 235, 0.18);
+      color: #93b4fd;
+      border: 1px solid rgba(37, 99, 235, 0.28);
+    }
+
+    .pb-blue:hover {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    .pb-green {
+      background: rgba(0, 200, 100, 0.13);
+      color: #4ECCA3;
+      border: 1px solid rgba(0, 200, 100, 0.22);
+    }
+
+    .pb-green:hover {
+      background: rgba(0, 200, 100, 0.75);
+      color: #fff;
+    }
+
+    /* ── DASHBOARD ── */
+    .dashboard {
+      background: var(--king-dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dashboard::before {
+      content: '';
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, transparent 70%);
+      top: -200px;
+      right: -200px;
+      pointer-events: none;
+    }
+
+    .dashboard-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .dashboard-img-wrap {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(124, 58, 237, 0.35);
+      box-shadow: 0 0 70px rgba(37, 99, 235, 0.18), 0 0 36px rgba(124, 58, 237, 0.12);
+      position: relative;
+    }
+
+    .dashboard-img-wrap img {
+      width: 100%;
+      display: block;
+    }
+
+    .dashboard-tags {
+      position: absolute;
+      bottom: 13px;
+      left: 13px;
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .d-tag {
+      background: rgba(0, 0, 0, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 0.73rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 7px;
+      backdrop-filter: blur(8px);
+    }
+
+    .dashboard-text p {
+      font-size: 0.93rem;
+      line-height: 1.9;
+      color: rgba(255, 255, 255, 0.55);
+      margin-bottom: 1.8rem;
+    }
+
+    .dashboard-text strong {
+      color: rgba(255, 255, 255, 0.88);
+      font-weight: 700;
+    }
+
+    .dashboard-btns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      background: linear-gradient(180deg, #0c0c20 0%, var(--king-dark) 100%);
+    }
+
+    .timeline-track {
+      position: relative;
+      padding-left: 3rem;
+      margin-top: 3.5rem;
+    }
+
+    .timeline-track::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--king-yellow), var(--king-pink), var(--king-purple), #4CAF50);
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+
+    .tl-dot {
+      position: absolute;
+      left: -2.58rem;
+      top: 13px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--king-card);
+      border: 2px solid;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dot-blue {
+      border-color: var(--king-blue);
+      box-shadow: 0 0 10px rgba(37, 99, 235, 0.55);
+    }
+
+    .dot-yellow {
+      border-color: var(--king-yellow);
+      box-shadow: 0 0 10px rgba(255, 214, 0, 0.55);
+    }
+
+    .dot-pink {
+      border-color: var(--king-pink);
+      box-shadow: 0 0 10px rgba(255, 45, 120, 0.55);
+    }
+
+    .dot-green {
+      border-color: #4CAF50;
+      box-shadow: 0 0 10px rgba(76, 175, 80, 0.55);
+      animation: pulse-green 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-green {
+
+      0%,
+      100% {
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.55);
+      }
+
+      50% {
+        box-shadow: 0 0 22px rgba(76, 175, 80, 0.85), 0 0 36px rgba(76, 175, 80, 0.35);
+      }
+    }
+
+    .tl-card {
+      background: var(--king-card);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 16px;
+      padding: 1.4rem 1.7rem;
+      transition: transform 0.22s, box-shadow 0.22s;
+    }
+
+    .tl-card:hover {
+      transform: translateX(5px);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+    }
+
+    .tl-year {
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      margin-bottom: 0.35rem;
+    }
+
+    .ty-blue {
+      color: #93b4fd;
+    }
+
+    .ty-yellow {
+      color: var(--king-yellow);
+    }
+
+    .ty-pink {
+      color: #ffabc5;
+    }
+
+    .ty-green {
+      color: #6fcf6f;
+    }
+
+    .tl-card h3 {
+      font-size: 1.08rem;
+      font-weight: 900;
+      margin-bottom: 0.35rem;
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .tl-card p {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.45);
+      line-height: 1.6;
+    }
+
+    .tl-card-award {
+      background: linear-gradient(135deg, rgba(255, 214, 0, 0.08) 0%, rgba(255, 140, 0, 0.05) 100%);
+      border-color: rgba(255, 214, 0, 0.25);
+    }
+
+    .tl-card-live {
+      background: linear-gradient(135deg, rgba(255, 214, 0, 0.05) 0%, rgba(76, 175, 80, 0.05) 100%);
+      border-color: rgba(255, 214, 0, 0.18);
+    }
+
+    .tl-badge-now {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(76, 175, 80, 0.13);
+      color: #6fcf6f;
+      border: 1px solid rgba(76, 175, 80, 0.28);
+      border-radius: 999px;
+      padding: 3px 11px;
+      font-size: 0.73rem;
+      font-weight: 800;
+      margin-bottom: 0.7rem;
+    }
+
+    .tl-current-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.2rem;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--king-yellow), #4CAF50);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tl-dots-anim {
+      display: inline-flex;
+      gap: 3px;
+      align-items: center;
+      margin-left: 5px;
+    }
+
+    .tl-dots-anim span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #6fcf6f;
+      animation: bounce-dot 1.2s ease-in-out infinite;
+    }
+
+    .tl-dots-anim span:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    .tl-dots-anim span:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes bounce-dot {
+
+      0%,
+      100% {
+        transform: translateY(0)
+      }
+
+      50% {
+        transform: translateY(-5px)
+      }
+    }
+
+    /* ── LOGO SECTION ── */
+    .logo-section {
+      background: linear-gradient(135deg, #0e0028 0%, #0c0c20 50%, #0e0028 100%);
+      border-top: 1px solid rgba(196, 181, 253, 0.12);
+      border-bottom: 1px solid rgba(196, 181, 253, 0.12);
+    }
+
+    .logo-inner {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .logo-wrap {
+      position: relative;
+      width: 270px;
+      height: 270px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-glow {
+      position: absolute;
+      inset: -18px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(196, 181, 253, 0.22) 0%, transparent 70%);
+      animation: pulse-logo-sec 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-logo-sec {
+
+      0%,
+      100% {
+        opacity: 0.5;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.05)
+      }
+    }
+
+    .logo-wrap img {
+      width: 230px;
+      height: 230px;
+      object-fit: contain;
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 0 28px rgba(196, 181, 253, 0.45));
+      transition: transform 0.5s;
+    }
+
+    .logo-wrap img:hover {
+      transform: scale(1.05) rotate(-2deg);
+    }
+
+    .logo-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 1.8rem;
+    }
+
+    .logo-detail-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 14px;
+      padding: 1.1rem;
+      transition: all 0.2s;
+    }
+
+    .logo-detail-card:hover {
+      background: rgba(196, 181, 253, 0.06);
+      border-color: rgba(196, 181, 253, 0.18);
+    }
+
+    .logo-detail-card h4 {
+      font-size: 0.85rem;
+      font-weight: 800;
+      margin-bottom: 0.45rem;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .logo-detail-card p {
+      font-size: 0.8rem;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.46);
+    }
+
+    .logo-detail-card strong {
+      color: rgba(255, 255, 255, 0.78);
+      font-weight: 700;
+    }
+
+    /* ── CURRICULUM ── */
+    .curriculum {
+      background: var(--king-dark);
+    }
+
+    .curriculum-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 2.8rem;
+      justify-content: center;
+    }
+
+    .filter-chip {
+      padding: 7px 20px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      border: 1.5px solid;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: transparent;
+      letter-spacing: 0.3px;
+    }
+
+    .chip-all {
+      color: rgba(255, 255, 255, 0.7);
+      border-color: rgba(255, 255, 255, 0.22);
+    }
+
+    .chip-all.active,
+    .chip-all:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.5);
+      color: #fff;
+    }
+
+    .chip-math {
+      color: #93b4fd;
+      border-color: rgba(147, 180, 253, 0.35);
+    }
+
+    .chip-math.active,
+    .chip-math:hover {
+      background: rgba(147, 180, 253, 0.13);
+      border-color: #93b4fd;
+    }
+
+    .chip-lang {
+      color: #c4b5fd;
+      border-color: rgba(196, 181, 253, 0.35);
+    }
+
+    .chip-lang.active,
+    .chip-lang:hover {
+      background: rgba(196, 181, 253, 0.1);
+      border-color: #c4b5fd;
+    }
+
+    .chip-arts {
+      color: #4ECCA3;
+      border-color: rgba(78, 204, 163, 0.35);
+    }
+
+    .chip-arts.active,
+    .chip-arts:hover {
+      background: rgba(78, 204, 163, 0.09);
+      border-color: #4ECCA3;
+    }
+
+    .chip-class {
+      color: var(--king-yellow);
+      border-color: rgba(255, 214, 0, 0.35);
+    }
+
+    .chip-class.active,
+    .chip-class:hover {
+      background: rgba(255, 214, 0, 0.09);
+      border-color: var(--king-yellow);
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .game-card {
+      background: var(--king-card);
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.3, 1.2);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .game-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(255, 214, 0, 0.22);
+      box-shadow: 0 14px 44px rgba(0, 0, 0, 0.45), 0 0 28px rgba(255, 214, 0, 0.09);
+    }
+
+    .game-thumb {
+      width: 100%;
+      height: 155px;
+      object-fit: cover;
+      display: block;
+      background: #12102a;
+    }
+
+    .game-info {
+      padding: 1.1rem 1.3rem;
+    }
+
+    .game-cat {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      margin-bottom: 0.65rem;
+    }
+
+    .cat-math {
+      background: rgba(147, 180, 253, 0.14);
+      color: #93b4fd;
+    }
+
+    .cat-lang {
+      background: rgba(196, 181, 253, 0.14);
+      color: #c4b5fd;
+    }
+
+    .cat-arts {
+      background: rgba(78, 204, 163, 0.1);
+      color: #4ECCA3;
+    }
+
+    .cat-class {
+      background: rgba(255, 214, 0, 0.1);
+      color: var(--king-yellow);
+    }
+
+    .cat-other {
+      background: rgba(255, 255, 255, 0.07);
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .game-title {
+      font-weight: 800;
+      font-size: 0.92rem;
+      margin-bottom: 0.4rem;
+      color: #fff;
+    }
+
+    .game-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.76rem;
+      color: rgba(255, 255, 255, 0.32);
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .game-play {
+      color: var(--king-yellow);
+      font-weight: 800;
+    }
+
+    .grid-empty {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 4rem;
+      color: rgba(255, 255, 255, 0.28);
+      font-size: 0.95rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #030310;
+      border-top: 2px solid var(--king-yellow);
+      padding: 4rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.9rem;
+    }
+
+    .footer-logo img {
+      height: 36px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .footer-logo-text {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--king-yellow);
+    }
+
+    .footer-desc {
+      font-size: 0.83rem;
+      line-height: 1.75;
+      color: rgba(255, 255, 255, 0.32);
+      margin-bottom: 1.4rem;
+    }
+
+    .footer-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255, 255, 255, 0.48);
+      text-decoration: none;
+      font-size: 0.83rem;
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover {
+      color: var(--king-yellow);
+    }
+
+    footer h4 {
+      font-size: 0.73rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.28);
+      margin-bottom: 1.1rem;
+    }
+
+    footer ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    footer li {
+      font-size: 0.83rem;
+      color: rgba(255, 255, 255, 0.46);
+      display: flex;
+      gap: 7px;
+      align-items: flex-start;
+    }
+
+    footer li strong {
+      color: rgba(255, 255, 255, 0.72);
+      font-weight: 700;
+    }
+
+    .kakao-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #FEE500;
+      color: #191919;
+      font-weight: 900;
+      font-size: 0.88rem;
+      padding: 10px 20px;
+      border-radius: 11px;
+      text-decoration: none;
+      transition: all 0.2s;
+      margin-top: 0.4rem;
+    }
+
+    .kakao-btn:hover {
+      background: #F4DC00;
+      transform: translateY(-2px);
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 2rem auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.22);
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1024px) {
+
+      .hero-inner,
+      .story-inner,
+      .dashboard-inner,
+      .logo-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .highlights-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .music-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .game-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stats-bar .container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .logo-details {
+        grid-template-columns: 1fr;
+      }
+
+      .logo-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .logo-wrap {
+        margin: 0 auto;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media(max-width:640px) {
+      nav {
+        padding: 0 1rem;
+      }
+
+      .nav-logo.has-logo .nav-logo-text {
+        display: none;
+      }
+
+      .nav-cta {
+        padding: 6px 14px;
+        font-size: 0.8rem;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .game-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-bar .container {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero {
+        padding: 5rem 1.5rem 3rem;
+      }
+
+      .container {
+        padding: 4rem 1.5rem;
+      }
+
+      .floating-stat {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <img src="https://킹수학.com/logo.png" alt="킹수학 로고" onload="this.parentElement.classList.add('has-logo')"
+        onerror="this.style.display='none'">
+      <span class="nav-logo-text">킹수학 소개</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#highlights">특별함</a></li>
+      <li><a href="#about">개발 스토리</a></li>
+      <li><a href="#features">수업 최적화</a></li>
+      <li><a href="#instruments">악기·음악</a></li>
+      <li><a href="#dashboard">대시보드</a></li>
+      <li><a href="#history">연혁</a></li>
+      <li><a href="#curriculum">콘텐츠</a></li>
+    </ul>
+    <a href="https://open.kakao.com/o/sLaZ7O9h" target="_blank" class="nav-cta">💬 카톡 문의</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badges">
+          <span class="badge badge-gold">🏆 2026 아이스크림 바이브코딩 공모전 최우수상</span>
+          <span class="badge badge-purple">🌐 16개국 언어 지원</span>
+        </div>
+        <span class="hero-eyebrow">현직 교사가 만든 · 안전한 학습 놀이터</span>
+        <h1 class="hero-title">전자칠판 게임 맛집</h1>
+        <span class="hero-brand">킹수학</span>
+        <p class="hero-tags">#무광고 &nbsp;#무가입 &nbsp;#무설치 &nbsp;#무료</p>
+        <p class="hero-desc">
+          <strong>Global No.1 세계 최초, 세계 최고 전자칠판 학습도구 플랫폼</strong><br>
+          수학은 물론 <span class="hl">영어, 국어, 사회, 예체능 및 학급운영</span>까지!<br>
+          <span class="hl">바이브 코딩</span>의 좋은 예시!<br>
+          자투리 수업시간? <strong>킹수학 하나면 끝.</strong>
+        </p>
+        <div class="hero-btns">
+          <a href="https://www.킹수학.com" target="_blank" class="btn-primary">▶ 킹수학 바로 가기</a>
+          <a href="#highlights" class="btn-ghost">특별함 보기 ↓</a>
+        </div>
+        <div
+          style="margin-top:1.4rem;background:rgba(255,255,255,0.035);border:1px solid rgba(255,255,255,0.08);border-radius:13px;padding:0.9rem 1.1rem;font-size:0.8rem;color:rgba(255,255,255,0.42);max-width:440px;line-height:1.7">
+          💡 <strong style="color:rgba(255,255,255,0.65)">접속 주소 안내</strong> — <strong
+            style="color:rgba(255,255,255,0.58)">킹수학.com</strong>과 <strong
+            style="color:rgba(255,255,255,0.58)">kingsmath.com</strong> 두 주소 모두 동일합니다. 교육청망 차단 시 한글 주소를 이용하세요.
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-mockup">
+          <img id="hero-slide" src="slide-photo-1.jpg" alt="킹수학 수업 모습"
+            onerror="this.src='https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80'">
+          <div class="hero-mockup-overlay">
+            <p class="hero-mockup-label">🎮 전자칠판 게임 맛집 · 킹수학</p>
+          </div>
+        </div>
+        <div class="floating-stat stat-a">
+          <div class="stat-num">300+</div>
+          <div class="stat-label">게임 &amp; 웹앱</div>
+        </div>
+        <div class="floating-stat stat-b">
+          <div class="stat-num">16</div>
+          <div class="stat-label">지원 언어</div>
+        </div>
+        <div class="floating-stat stat-c">
+          <div class="stat-num">4無</div>
+          <div class="stat-label">광고·가입·설치·요금</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="container">
+      <div class="stat-item">
+        <div class="num display-font" data-count>300+</div>
+        <div class="desc">게임 &amp; 웹앱 개수</div>
+      </div>
+      <div class="stat-item">
+        <div class="num display-font">16</div>
+        <div class="desc">지원 언어 수</div>
+      </div>
+      <div class="stat-item">
+        <div class="num display-font">0원</div>
+        <div class="desc">이용 요금</div>
+      </div>
+      <div class="stat-item">
+        <div class="num display-font">1위</div>
+        <div class="desc">세계 최초 전자칠판 플랫폼</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIGHLIGHTS -->
+  <section id="highlights" class="highlights">
+    <div class="container">
+      <div style="text-align:center" class="reveal">
+        <div class="section-label sl-yellow">✨ WHAT MAKES US SPECIAL</div>
+        <h2 class="section-title">킹수학만의 3가지 특별함</h2>
+        <p class="section-sub">제가 봐도 이건 좀 잘했습니다.</p>
+      </div>
+      <div class="highlights-grid">
+        <div class="hl-card reveal">
+          <img src="grade.png" alt="단원별 게임" class="hl-image"
+            onerror="this.src='https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80'">
+          <div class="hl-content">
+            <div class="hl-icon ic-gold">🎯</div>
+            <h3 class="hl-title">초등 수학 단원별 맞춤 추천</h3>
+            <p class="hl-desc">단원 하나하나마다 할만한 게임을 몇 개씩 만들어 두었습니다. 번갈아가면서 하세요. 학년 단원별 게임 찾기도 쉽게 세팅해두었습니다.</p>
+          </div>
+        </div>
+        <div class="hl-card reveal" style="transition-delay:.1s">
+          <img src="slide-photo-2.jpg" alt="전 과목" class="hl-image"
+            onerror="this.src='https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80'">
+          <div class="hl-content">
+            <div class="hl-icon ic-cyan">📚</div>
+            <h3 class="hl-title">수학을 넘어 전 과목까지</h3>
+            <p class="hl-desc">수학 게임을 많이 만들다 보니 다른 과목도 만들면 좋겠더라구요. 영어, 국어, 사회, 과학, 음악, 미술, 학급운영 도구까지! 시작은 수학했지만 끝은
+              교육했습니다.</p>
+          </div>
+        </div>
+        <div class="hl-card reveal" style="transition-delay:.2s">
+          <img src="16.png" alt="16개국 언어" class="hl-image"
+            onerror="this.src='https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&q=80'">
+          <div class="hl-content">
+            <div class="hl-icon ic-purple">🌐</div>
+            <h3 class="hl-title">16개국 언어 지원</h3>
+            <p class="hl-desc">영어, 일본어, 중국어, 베트남어 등 16개국 언어를 완벽하게 지원합니다. K-교육자료의 힘을 보여주겠습니다! 외국 친구 있으면 소개 좀 해주세요. 😅</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section id="about" class="story">
+    <div class="container">
+      <div class="story-inner">
+        <div class="story-text reveal">
+          <div class="section-label sl-cyan">👨‍💻 DEVELOPER STORY</div>
+          <h2 class="section-title">외국산 게임이<br>아쉬워서 시작했습니다</h2>
+
+    <p>저는 경남의 한 초등학교에 근무하고 있는 <strong>20년 차 현직 초등 교사</strong>입니다. 2025년 겨울, 인스타그램 피드에서 여러 학생이 전자칠판으로 수학 게임을 하는 모습을 보았습니다. 외국 프로그램이었는데, 마침 우리 교실에도 신형 전자칠판이 있어 게임 링크를 구해 우리 반 학생들과 함께 해보았죠. 학생들이 정말 좋아하더라고요. 그런데 제가 4학년 담임을 맡고 있다 보니, 뺄셈 문제에서 음수가 나오거나 한국어 지원이 되지 않는 점 등이 아쉽게 느껴졌습니다.</p>
+    
+    <p>마침 '바이브 코딩'이라는 단어가 뉴스에 많이 나올 때였습니다. <strong>'공부한다 생각하고 4학년 교육과정에 맞춰 한국어판으로 한번 만들어볼까?'</strong> 하는 가벼운 마음으로 시도해 봤는데, 어라? 생각보다 비슷하게 구현되더라고요. 그렇게 바이브 코딩으로 만든 첫 번째 게임이 바로 <a href="https://xn--9p4bn1ysod.com/kingmath/" target="_blank">킹수학 배틀</a>이었습니다.</p>
+    
+    <p>그 이후로 <strong>'설마 이것도 될까?'</strong> 하는 마음으로 끊임없이 질문하고 연구하며 아이디어를 하나하나 게임으로 개발했습니다. 그렇게 하다 보니 어느덧 <strong>300개가 넘는 게임을 보유한 '킹수학'</strong>이 되었습니다. 나중에는 바이브 코딩의 매력에 푹 빠져 재미를 느끼다 보니 멈출 수가 없더라고요. ㅎㅎㅎ</p>
+    
+    <p>킹수학은 기획, 개발, 디자인, 유지보수까지 모든 과정을 <strong>'킹선생' 1인이 직접 총괄하고 운영하는 독립 프로젝트</strong>입니다. 초창기부터 300개 정도까지는 단순 무식 <strong>오직 구글 제미나이 채팅창만을 사용</strong>했습니다. 그러다 2026년 중반 안티그래비티(Antigravity) 2.0이 나온 후부터는 구글의 안티그래비티와 클로드(Claude) 등을 함께 활용하며, 상황에 맞춰 다양한 도구를 유연하게 사용하고 있습니다.</p>
+
+          <div class="github-box">
+            <span style="font-size:1.5rem">🐙</span>
+            <div>
+              <h4>게임 파일 모두를 공유합니다.</h4>
+              <p>킹수학의 게임 파일은 누구나 다운받을 수 있도록 깃허브에 공유되어 있습니다. 코드를 활용해 <strong style="color:rgba(255,255,255,0.75)">우리 반
+                  맞춤형 놀이 학습 사이트</strong>를 만들어보세요!</p>
+              <a href="https://github.com/kingsmath/web-games" target="_blank">GitHub 소스코드 보러가기 →</a>
+            </div>
+          </div>
+        </div>
+        <div class="story-images reveal" style="transition-delay:.15s">
+          <div class="story-img-wrap">
+            <img src="before.jpg" alt="초기 킹수학 배틀"
+              onerror="this.src='https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80'">
+            <div class="story-img-caption">처음 개발했던 킹수학 배틀 초기 모습</div>
+          </div>
+          <div class="story-img-wrap">
+            <img src="after.jpg" alt="업그레이드 킹수학"
+              onerror="this.src='https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&q=80'">
+            <div class="story-img-caption">다크모드를 기본으로 한 업그레이드 킹수학 배틀</div>
+          </div>
+          <div class="story-img-wrap">
+            <img src="all.jpg" alt="200여개 게임"
+              onerror="this.src='https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80'">
+            <div class="story-img-caption">킹수학 배틀에서 확장된 200여 개 게임들</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGO -->
+  <section class="logo-section">
+    <div class="container">
+      <div class="logo-inner">
+        <div class="logo-wrap reveal">
+          <div class="logo-glow"></div>
+          <img src="logo500.png" alt="킹수학 로고" onerror="this.src='https://킹수학.com/logo.png'">
+        </div>
+        <div class="reveal" style="transition-delay:.1s">
+          <div class="section-label sl-purple">🎨 BRAND IDENTITY</div>
+          <h2 class="section-title">미지의 수학 세계를 정복할<br><span
+              style="background:linear-gradient(135deg,#c4b5fd,#FF2D78);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">킹수학(Kingsmath)
+              로고</span></h2>
+          <p class="section-sub" style="margin-bottom:1.8rem">수학을 어렵게 느끼는 학생들에게는 친근하게 다가가고, 동시에 글로벌 수학 교육의 리더로 발돋움하겠다는
+            포부를 시각적으로 담아냈습니다.</p>
+          <div class="logo-details">
+            <div class="logo-detail-card">
+              <h4 style="color:#c4b5fd">🟣 신비로운 테마색, 보라</h4>
+              <p>로고 전반을 감싸는 보라색은 <strong>'아직 탐험하지 못한 미지의 세계'</strong>이자 <strong>'수학의 세계'</strong>를 상징합니다.</p>
+            </div>
+            <div class="logo-detail-card">
+              <h4 style="color:var(--king-yellow)">👑 왕관을 쓴 사자</h4>
+              <p>동물의 왕 사자에게 왕관을 씌워, 킹수학과 함께라면 누구나 <strong>'수학의 왕'</strong>이 될 수 있다는 자신감을 표현했습니다.</p>
+            </div>
+            <div class="logo-detail-card">
+              <h4 style="color:#ffabc5">😄 사자의 눈과 코 'ㅋㅅㅎ'</h4>
+              <p>사자 얼굴의 눈과 코가 <strong>'킹수학'의 한글 자음(ㅋ, ㅅ, ㅎ)</strong>으로 되어 있어요. 킹수학이 대한민국의 K-교육자료임을 강조합니다.</p>
+            </div>
+            <div class="logo-detail-card">
+              <h4 style="color:var(--king-cyan)">🌐 글로벌 비전, Kingsmath</h4>
+              <p>하단의 영문 텍스트는 '수학의 왕'을 뜻함과 동시에, 글로벌 시장을 향해 뻗어나가는 <strong>킹수학의 도메인</strong>을 의미합니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES 4無 -->
+  <section id="features" class="features">
+    <div class="container">
+      <div style="text-align:center" class="reveal">
+        <div class="section-label sl-pink">⚡ CLASS-OPTIMIZED</div>
+        <h2 class="section-title">수업에 최적화된 게임들</h2>
+        <p class="section-sub"><strong style="color:var(--king-yellow)">수업 앞뒤 10분</strong> 즐기기 좋게 <strong
+            style="color:var(--king-yellow)">한 판 1분</strong> 내외, <strong
+            style="color:var(--king-yellow)">4~6인용</strong>으로 제작했습니다.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feat-card reveal"><span class="feat-icon">🚫</span>
+          <h3 class="feat-title">무광고 (No Ads)</h3>
+          <p class="feat-desc">야한 광고, 게임 광고 없어요.<br><strong>안심하고 쓰세요.</strong></p>
+        </div>
+        <div class="feat-card reveal" style="transition-delay:.08s"><span class="feat-icon">🙅</span>
+          <h3 class="feat-title">무가입 (No Sign-up)</h3>
+          <p class="feat-desc"><strong>회원 가입?</strong> 그런 거 없어요.<br><strong>개인정보 수집?</strong> 그런 거 없어요.</p>
+        </div>
+        <div class="feat-card reveal" style="transition-delay:.16s"><span class="feat-icon">📱</span>
+          <h3 class="feat-title">무설치 (No Install)</h3>
+          <p class="feat-desc">킹수학.com 링크 하나면<br><strong>뚝딱!</strong> 바로 실행됩니다.</p>
+        </div>
+        <div class="feat-card reveal" style="transition-delay:.24s"><span class="feat-icon">🎁</span>
+          <h3 class="feat-title">무료 (Free)</h3>
+          <p class="feat-desc">킹수학은 모두 <strong>무료</strong>입니다.<br>사비로 운영한다고 생색냅니다.</p>
+        </div>
+      </div>
+      <div class="support-box reveal">
+        <div>
+          <h4>☕ 킹수학을 응원해 주세요</h4>
+          <p>현재 호스팅·도메인·AI 구독료 등 모든 운영비는 킹선생의 사비로 충당하고 있습니다.<br>
+            매달 후원 목표액은 소박하게 <strong>아이스 아메리카노 한 잔(4,700원)</strong>입니다. ☕<br>
+            <strong>네이버페이, 카카오페이</strong>로도 간편하게 후원하실 수 있습니다.
+          </p>
+        </div>
+        <a href="https://litt.ly/kingsmath" target="_blank" class="btn-primary"
+          style="white-space:nowrap;flex-shrink:0">커피 한 잔 보내주기 ☕</a>
+      </div>
+      <div class="reveal" style="margin-top:4rem">
+        <div
+          style="border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,0.07);height:320px;position:relative">
+          <img src="6.jpg" alt="교실에서 킹수학에 몰입한 학생들" style="width:100%;height:100%;object-fit:cover;display:block"
+            onerror="this.src='https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80'">
+          <div
+            style="position:absolute;inset:0;background:rgba(7,7,20,0.55);display:flex;align-items:center;justify-content:center;padding:2rem;text-align:center">
+            <p
+              style="font-size:1.3rem;font-weight:800;color:#fff;line-height:1.6;text-shadow:0 2px 12px rgba(0,0,0,0.8)">
+              "학생들이 좋아하고, 배움이 절로 생기는<br>콘텐츠를 지향합니다."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MUSIC -->
+  <section id="instruments" class="music">
+    <div class="container">
+      <div style="text-align:center" class="reveal">
+        <div class="section-label sl-purple">🎵 MUSIC &amp; INSTRUMENTS</div>
+        <h2 class="section-title">킹수학이 자랑하는<br>악기 · 음악 콘텐츠</h2>
+        <p class="section-sub">음악 교육에 진심입니다. 킹수학과 함께라면 음악도 재미있어요.</p>
+      </div>
+      <div class="music-grid">
+        <div class="music-card reveal">
+          <div class="music-card-header">
+            <div class="music-icon mi-blue">🖥️</div>
+            <div>
+              <h3>전자칠판용</h3>
+              <p>교실 앞으로 나와 다함께 즐기는 콘텐츠</p>
+            </div>
+          </div>
+          <ul class="music-list">
+            <li class="music-item"><span>🎼 오선지 연주킹</span><a href="https://kingsmath.com/king_music_5/" target="_blank"
+                class="play-btn pb-blue">▶ 플레이</a></li>
+            <li class="music-item"><span>🎹 전자칠판 킹피아노</span><a href="https://kingsmath.com/king_music_piano/piano.html"
+                target="_blank" class="play-btn pb-blue">▶ 플레이</a></li>
+            <li class="music-item"><span>🎶 합주킹</span><a href="https://kingsmath.com/king_ensemble/" target="_blank"
+                class="play-btn pb-blue">▶ 플레이</a></li>
+            <li class="music-item"><span>🎹 피아노킹</span><a href="https://kingsmath.com/king_music_piano/" target="_blank"
+                class="play-btn pb-blue">▶ 플레이</a></li>
+            <li class="music-item"><span>🎵 계이름킹</span><a href="https://www.xn--9p4bn1ysod.com/kingmusic_doremi/"
+                target="_blank" class="play-btn pb-blue">▶ 플레이</a></li>
+          </ul>
+        </div>
+        <div class="music-card reveal" style="transition-delay:.1s">
+          <div class="music-card-header">
+            <div class="music-icon mi-green">📱</div>
+            <div>
+              <h3>스마트폰 · 패드용</h3>
+              <p>학생 각자의 기기로 몰입하는 콘텐츠</p>
+            </div>
+          </div>
+          <ul class="music-list">
+            <li class="music-item"><span>🎧 킹디사이저 모바일</span><a href="https://kingsmath.com/smart_kingthesizer/"
+                target="_blank" class="play-btn pb-green">▶ 플레이</a></li>
+            <li class="music-item"><span>🎸 코드킹 모바일</span><a href="https://kingsmath.com/smart_chord/" target="_blank"
+                class="play-btn pb-green">▶ 플레이</a></li>
+            <li class="music-item"><span>🎹 피아노킹 모바일</span><a href="https://kingsmath.com/smart_piano/" target="_blank"
+                class="play-btn pb-green">▶ 플레이</a></li>
+            <li class="music-item"><span>🥁 비트킹 모바일</span><a href="https://kingsmath.com/smart_beat/" target="_blank"
+                class="play-btn pb-green">▶ 플레이</a></li>
+            <li class="music-item"><span>🎵 음표킹 모바일</span><a href="https://kingsmath.com/smart_musicnote/"
+                target="_blank" class="play-btn pb-green">▶ 플레이</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="dashboard">
+    <div class="container">
+      <div class="dashboard-inner">
+        <div class="dashboard-img-wrap reveal">
+          <img src="https://11ukul.com/king_dashboard/1.jpg" alt="킹수학 대시보드">
+          <div class="dashboard-tags">
+            <span class="d-tag">#급식/시간표</span>
+            <span class="d-tag">#학생뽑기</span>
+            <span class="d-tag">#타이머/칠판</span>
+          </div>
+        </div>
+        <div class="dashboard-text reveal" style="transition-delay:.15s">
+          <div class="section-label sl-cyan">🖥️ CLASSROOM DASHBOARD</div>
+          <h2 class="section-title">텅텅 빈 TV쪽 모니터<br>바탕화면에 멋과 실용성을 더하다.</h2>
+          <p>"쉬는 시간 몇 분 남았어요?", "오늘 급식 뭐예요?" 쏟아지는 질문에 이제 대답하지 마시고 손가락만 가리키세요! 급식, 시간표, 타이머, 학생 뽑기, 학급 알림까지 교사 맞춤 실시간 반응형
+            바탕화면이 다 해줍니다. <strong>이제 한껏 거들먹거리셔도 됩니다. ㅋㅋ</strong></p>
+          <div class="dashboard-btns">
+            <a href="https://xn--9p4bn1ysod.com/king_dashboard/" target="_blank" class="btn-ghost">👀 살펴보기</a>
+            <a href="https://docs.google.com/presentation/d/1vUxFvM8HNLnWZOJbltaPFCvGy-BjS-Y_AaLUHyISoKo/edit?usp=sharing"
+              target="_blank" class="btn-primary">⬇ 쉽게 설치하기</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="history" class="timeline">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:1rem" class="reveal">
+        <div class="section-label sl-yellow">🚀 HISTORY</div>
+        <h2 class="section-title">킹수학이 걸어온 길</h2>
+      </div>
+      <div style="max-width:720px;margin:0 auto" class="reveal">
+        <div class="timeline-track">
+
+          <div class="tl-item">
+            <div class="tl-dot dot-blue"></div>
+            <div class="tl-card">
+              <div class="tl-year ty-blue">2020년</div>
+              <h3>수학 부진 학생 진단 · 도움 자료 사이트 킹수학.com 오픈</h3>
+              <a href="https://sites.google.com/view/kingsmathdotcom?pli=1" target="_blank"
+                style="display:inline-flex;align-items:center;gap:5px;margin-top:10px;color:#93b4fd;font-weight:700;font-size:0.82rem;text-decoration:none">→
+                당시 프로그램 보기</a>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot dot-blue"></div>
+            <div class="tl-card">
+              <div class="tl-year ty-blue">2025년 12월</div>
+              <h3>첫 게임 '킹수학 배틀' 바이브코딩으로 개발</h3>
+              <p>이후 밤낮으로 킹수학 게임 개발</p>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot dot-blue"></div>
+            <div class="tl-card">
+              <div class="tl-year ty-blue">2026년 3월</div>
+              <h3>글로벌 다국어 지원 및 다과목 포털로 리뉴얼</h3>
+              <p>16개국 언어 지원 업그레이드 / 글로벌 도메인 kingsmath.com 런칭</p>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot dot-yellow"></div>
+            <div class="tl-card tl-card-award">
+              <div class="tl-year ty-yellow">2026년 4월</div>
+              <h3>🏆 아이스크림 바이브코딩 공모전 최우수상 수상</h3>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot dot-yellow"></div>
+            <div class="tl-card">
+              <div class="tl-year ty-blue">2026년 6월 22일</div>
+              <h3>게임 및 웹앱 제작 업로드 300개 돌파</h3>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot dot-green"></div>
+            <div class="tl-card tl-card-live">
+              <div class="tl-badge-now">● 현재 진행형</div>
+              <div class="tl-year ty-green" id="current-date">날짜 불러오는 중...</div>
+              <h3 style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px">
+                킹수학 게임 및 웹앱
+                <span class="tl-current-num" id="dynamic-game-count">300+</span>개
+                개발 완료.
+              </h3>
+              <p style="margin-top:8px;display:flex;align-items:center;font-size:0.88rem">
+                그리고 계속 개발중
+                <span class="tl-dots-anim"><span></span><span></span><span></span></span>
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CURRICULUM -->
+  <section id="curriculum" class="curriculum">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:3rem" class="reveal">
+        <div class="section-label sl-yellow">📦 CONTENT LINEUP</div>
+        <h2 class="section-title">단원별 맞춤 콘텐츠 라인업</h2>
+        <p class="section-sub">300여 종의 수학, 영어, 국어, 예체능, 학급운영 에듀테크 콘텐츠</p>
+      </div>
+      <div class="curriculum-filters reveal">
+        <button class="filter-chip chip-all active" data-tag="all"># 전체보기</button>
+        <button class="filter-chip chip-math" data-tag="Numbers"># 수학 (수와연산)</button>
+        <button class="filter-chip chip-math" data-tag="Geometry"># 수학 (도형)</button>
+        <button class="filter-chip chip-lang" data-tag="language"># 영어 / 국어</button>
+        <button class="filter-chip chip-arts" data-tag="arts"># 음악 / 미술</button>
+        <button class="filter-chip chip-class" data-tag="kingclass"># 학급운영</button>
+      </div>
+      <div class="game-grid" id="game-grid">
+        <div class="grid-empty">게임 데이터를 불러오는 중...</div>
+      </div>
+      <div style="text-align:center;margin-top:3.5rem" class="reveal">
+        <a href="https://www.킹수학.com" target="_blank" class="btn-primary" style="font-size:1rem;padding:15px 38px">🎮 전체 콘텐츠 플레이하기</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">
+          <img src="https://킹수학.com/logo.png" alt="킹수학 로고" onerror="this.style.display='none'">
+          <span class="footer-logo-text">킹수학.com</span>
+        </div>
+        <p class="footer-desc">선생님이 직접 만든 안전하고 유익한<br>교실 속 에듀테크 플랫폼입니다.</p>
+        <a href="https://www.킹수학.com" target="_blank" class="footer-link">킹수학 바로가기 →</a>
+      </div>
+      <div>
+        <h4>Developer</h4>
+        <ul>
+          <li>👤 개발자: <strong>킹선생</strong></li>
+          <li>🏆 <strong>2026 i-Scream 바이브코딩 공모전 최우수상</strong></li>
+          <li>🎤 바이브 코딩 및 교육용 플랫폼 구축 연수 다수 진행</li>
+          <li style="display:block;padding-top:4px">
+            <a href="https://canva.link/kingsmath3hr" target="_blank"
+              style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:10px;padding:9px 13px;color:rgba(255,255,255,0.65);text-decoration:none;font-size:0.8rem;font-weight:700;transition:border-color 0.2s"
+              onmouseover="this.style.borderColor='rgba(255,214,0,0.38)'"
+              onmouseout="this.style.borderColor='rgba(255,255,255,0.09)'">
+              📄 연수 계획안 예시 보기 →
+            </a>
+            <p style="margin-top:5px;font-size:0.73rem;color:rgba(255,255,255,0.28)">* 바이브 코딩으로 혁신하는 학급운영 (3시간/원격/대면)
+            </p>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p style="font-size:0.83rem;color:rgba(255,255,255,0.38);margin-bottom:0.9rem;line-height:1.75">버그 신고 / 아이디어 소개
+          / 연수 문의는<br>카카오톡으로 편하게 연락주세요.</p>
+        <a href="https://open.kakao.com/o/sLaZ7O9h" target="_blank" class="kakao-btn">💬 1:1 문의하기</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 KingsMath. All rights reserved.</span>
+      <span>🌐 Available in 16 languages</span>
+    </div>
+  </footer>
+
+  <!-- 실제 사이트에서는 이 태그 복원: <script src="/add/games-data-ko.js"></script> -->
+  <script src="/add/games-data-ko.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      // ── 아이콘 초기화 (lucide 있으면)
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+
+      // ── 오늘 날짜
+      const today = new Date();
+      const dateEl = document.getElementById('current-date');
+      if (dateEl) dateEl.textContent = today.getFullYear() + '년 ' + (today.getMonth() + 1) + '월 ' + today.getDate() + '일 현재';
+
+      // ── 게임 개수 300+ 고정
+      const countEl = document.getElementById('dynamic-game-count');
+      if (countEl) {
+        countEl.textContent = '300+';
+      }
+
+      // ── 히어로 슬라이드 (원본 이미지 파일명 그대로)
+      const slideImages = ['slide-photo-1.jpg', 'student-photo-2.jpg', 'slide-photo-3.jpg'];
+      const slideEl = document.getElementById('hero-slide');
+      let slideIdx = 0;
+      if (slideEl && slideImages.length > 1) {
+        setInterval(function () {
+          slideEl.style.opacity = '0';
+          setTimeout(function () {
+            slideIdx = (slideIdx + 1) % slideImages.length;
+            slideEl.src = slideImages[slideIdx];
+            slideEl.style.opacity = '1';
+          }, 600);
+        }, 3000);
+      }
+
+      // ── 스크롤 Reveal
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.08 });
+      document.querySelectorAll('.reveal').forEach(function (el) { observer.observe(el); });
+
+      // ── 태그 필터 버튼
+      document.querySelectorAll('.filter-chip').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('.filter-chip').forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          renderGameGrid(btn.dataset.tag);
+        });
+      });
+
+      // ── 초기 게임 그리드 렌더
+      renderGameGrid('all');
+    });
+
+    // ── 게임 그리드 렌더링 (기존 로직 동일)
+    function renderGameGrid(tag) {
+      var grid = document.getElementById('game-grid');
+      if (!grid) return;
+
+      var games = [];
+
+      if (typeof gameData !== 'undefined') {
+        if (tag === 'all') {
+          games = gameData.slice(0, 6);
+        } else if (tag === 'language') {
+          games = gameData.filter(function (g) { return g.tags.includes('kingen') || g.tags.includes('kingkr'); }).slice(0, 6);
+        } else if (tag === 'arts') {
+          games = gameData.filter(function (g) { return g.tags.includes('music') || g.tags.includes('kingph'); }).slice(0, 6);
+        } else {
+          games = gameData.filter(function (g) { return g.tags.includes(tag); }).slice(0, 6);
+        }
+
+        if (games.length === 0) {
+          grid.innerHTML = '<div class="grid-empty">해당 조건에 맞는 콘텐츠가 없습니다.<br>다른 태그를 선택해보세요.</div>';
+          return;
+        }
+
+        grid.innerHTML = games.map(function (game) {
+          var src = game.thumb || '';
+          if (!src.startsWith('http')) src = src.startsWith('/') ? 'https://kingsmath.com' + src : 'https://kingsmath.com/add/thumbnails/' + src;
+          var url = game.link.startsWith('http') ? game.link : 'https://kingsmath.com' + game.link;
+          var cat = '창의·놀이', catClass = 'cat-other';
+          if (game.tags.includes('Numbers') || game.tags.includes('Geometry') || game.tags.includes('Measurement') || game.tags.includes('Patterns') || game.tags.includes('Data')) { cat = '수학'; catClass = 'cat-math'; }
+          else if (game.tags.includes('kingen')) { cat = '영어'; catClass = 'cat-lang'; }
+          else if (game.tags.includes('kingkr')) { cat = '국어'; catClass = 'cat-lang'; }
+          else if (game.tags.includes('kingclass')) { cat = '학급운영'; catClass = 'cat-class'; }
+          else if (game.tags.includes('music') || game.tags.includes('kingph')) { cat = '예체능'; catClass = 'cat-arts'; }
+          var tagTexts = '';
+          if (typeof categoryList !== 'undefined') {
+            tagTexts = game.tags.slice(0, 3).map(function (tagId) {
+              var c = categoryList.find(function (x) { return x.id === tagId; });
+              return c ? '#' + c.name.ko : '';
+            }).join(' ');
+          }
+          return '<a href="' + url + '" target="_blank" class="game-card">'
+            + '<img src="' + src + '" alt="' + game.title.ko + '" class="game-thumb" onerror="this.src=\'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=400\'">'
+            + '<div class="game-info">'
+            + '<span class="game-cat ' + catClass + '">' + cat + '</span>'
+            + '<div class="game-title">' + game.title.ko + '</div>'
+            + (tagTexts ? '<div style="font-size:0.75rem;color:rgba(255,255,255,0.35);margin-bottom:2px">' + tagTexts + '</div>' : '')
+            + '<div class="game-meta"><span>👥 ' + (game.players ? game.players + '명' : '학급전체') + '</span><span class="game-play">▶ 플레이</span></div>'
+            + '</div></a>';
+        }).join('');
+
+      } else {
+        // gameData 없을 때 샘플
+        var sample = [
+          { title: '킹수학 배틀', cat: '수학', cc: 'cat-math', players: '4-6명', href: 'https://kingsmath.com' },
+          { title: '타임어택 계산왕', cat: '수학', cc: 'cat-math', players: '개인', href: 'https://kingsmath.com' },
+          { title: '킹디사이저', cat: '음악', cc: 'cat-arts', players: '개인', href: 'https://kingsmath.com/smart_kingthesizer/' },
+          { title: '영어 단어 배틀', cat: '영어', cc: 'cat-lang', players: '4명', href: 'https://kingsmath.com' },
+          { title: '학급 타이머', cat: '학급운영', cc: 'cat-class', players: '학급전체', href: 'https://kingsmath.com' },
+          { title: '오목 모바일', cat: '기타', cc: 'cat-other', players: '2명', href: 'https://kingsmath.com' }
+        ];
+        var imgs = [
+          'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=400',
+          'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=400',
+          'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&q=80&w=400',
+          'https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80&w=400',
+          'https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&q=80&w=400',
+          'https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&q=80&w=400'
+        ];
+        grid.innerHTML = sample.map(function (g, i) {
+          return '<a href="' + g.href + '" target="_blank" class="game-card">'
+            + '<img src="' + imgs[i] + '" alt="' + g.title + '" class="game-thumb">'
+            + '<div class="game-info">'
+            + '<span class="game-cat ' + g.cc + '">' + g.cat + '</span>'
+            + '<div class="game-title">' + g.title + '</div>'
+            + '<div class="game-meta"><span>👥 ' + g.players + '</span><span class="game-play">▶ 플레이</span></div>'
+            + '</div></a>';
+        }).join('');
+      }
+    }
+  </script>
+</body>
+
+</html>
