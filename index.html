@@ -2275,8 +2275,8 @@
     </div>
   </footer>
 
-  <!-- 실제 사이트에서는 이 태그 복원: <script src="/add/games-data-ko.js"></script> -->
-  <script src="/add/games-data-ko.js"></script>
+  <script src="games-data-ko-nb.js"></script>
+  <script src="games-data-ko-ex.js"></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -2353,9 +2353,7 @@
         }
 
         grid.innerHTML = games.map(function (game) {
-          var src = game.thumb || '';
-          if (!src.startsWith('http')) src = src.startsWith('/') ? 'https://kingsmath.com' + src : 'https://kingsmath.com/add/thumbnails/' + src;
-          var url = game.link.startsWith('http') ? game.link : 'https://kingsmath.com' + game.link;
+          var url = game.link.startsWith('http') ? game.link : 'https://킹수학.com' + (game.link.startsWith('/') ? '' : '/') + game.link;
           var cat = '창의·놀이', catClass = 'cat-other';
           if (game.tags.includes('Numbers') || game.tags.includes('Geometry') || game.tags.includes('Measurement') || game.tags.includes('Patterns') || game.tags.includes('Data')) { cat = '수학'; catClass = 'cat-math'; }
           else if (game.tags.includes('kingen')) { cat = '영어'; catClass = 'cat-lang'; }
@@ -2370,7 +2368,6 @@
             }).join(' ');
           }
           return '<a href="' + url + '" target="_blank" class="game-card">'
-            + '<img src="' + src + '" alt="' + game.title.ko + '" class="game-thumb" onerror="this.src=\'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80&w=400\'">'
             + '<div class="game-info">'
             + '<span class="game-cat ' + catClass + '">' + cat + '</span>'
             + '<div class="game-title">' + game.title.ko + '</div>'
@@ -2399,7 +2396,6 @@
         ];
         grid.innerHTML = sample.map(function (g, i) {
           return '<a href="' + g.href + '" target="_blank" class="game-card">'
-            + '<img src="' + imgs[i] + '" alt="' + g.title + '" class="game-thumb">'
             + '<div class="game-info">'
             + '<span class="game-cat ' + g.cc + '">' + g.cat + '</span>'
             + '<div class="game-title">' + g.title + '</div>'
