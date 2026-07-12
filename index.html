@@ -436,7 +436,13 @@
       padding: 12px 18px;
       backdrop-filter: blur(12px);
       box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
-    }
+  display: flex;
+  flex-direction: column; /* 숫자와 라벨을 위아래로 쌓기 */
+  align-items: center;    /* 수평 중앙 정렬 */
+  justify-content: center;/* 수직 중앙 정렬 */
+  text-align: center;     /* 내부 텍스트 중앙 정렬 보조 */
+  gap: 6px;               /* (선택) 항목 간 간격 */
+}
 
     .floating-stat .stat-num {
       font-family: 'Bebas Neue', sans-serif;
@@ -1890,7 +1896,7 @@
           <div class="hl-content">
             <div class="hl-icon ic-gold">🎯</div>
             <h3 class="hl-title">초등 수학 단원별 맞춤 추천</h3>
-            <p class="hl-desc">단원 하나하나마다 할만한 게임을 몇 개씩 만들어 두었습니다. 번갈아가면서 하세요. 학년 단원별 게임 찾기도 쉽게 세팅해두었습니다.</p>
+            <p class="hl-desc">단원 하나하나마다 할만한 게임을 몇 개씩 만들어 두었습니다. 학년 단원별 게임 찾기도 쉽게 세팅해두었습니다.</p>
           </div>
         </div>
         <div class="hl-card reveal" style="transition-delay:.1s">
