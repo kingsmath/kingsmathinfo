@@ -179,29 +179,31 @@
       box-shadow: 0 0 28px rgba(255, 214, 0, 0.55);
     }
 
-    /* ── i18n show/hide (default: Korean) ── */
+    /* ── i18n show/hide (default: Korean) ──
+       !important 필수: 페이지 곳곳의 기존 선택자(예: .story-github .github-box span)가
+       더 높은 우선순위를 가져서 언어 span을 덮어쓰는 것을 막아줍니다. */
     body [lang="en"] {
-      display: none;
+      display: none !important;
     }
 
     html.lang-en body [lang="ko"] {
-      display: none;
+      display: none !important;
     }
 
     html.lang-en body [lang="en"] {
-      display: inline;
+      display: inline !important;
     }
 
     body .lang-block[lang="en"] {
-      display: none;
+      display: none !important;
     }
 
     html.lang-en body .lang-block[lang="ko"] {
-      display: none;
+      display: none !important;
     }
 
     html.lang-en body .lang-block[lang="en"] {
-      display: block;
+      display: block !important;
     }
 
     /* ── LANG SWITCH ── */
@@ -855,7 +857,7 @@
       color: #ffffff;
     }
 
-    .story-github .github-box span {
+    .story-github .github-box > span {
       flex-shrink: 0;
       display: flex;
       align-items: center;
@@ -2028,7 +2030,7 @@
           </div>
         </div>
         <div class="floating-stat stat-a">
-          <div class="stat-num">300+</div>
+          <div class="stat-num">400+</div>
           <div class="stat-label"><span lang="ko">게임 &amp; 웹앱</span><span lang="en">Games &amp; Apps</span></div>
         </div>
         <div class="floating-stat stat-b">
@@ -2047,7 +2049,7 @@
   <div class="stats-bar">
     <div class="container">
       <div class="stat-item">
-        <div class="num display-font" data-count>300+</div>
+        <div class="num display-font" data-count>400+</div>
         <div class="desc"><span lang="ko">게임 &amp; 웹앱 개수</span><span lang="en">Games &amp; Web Apps</span></div>
       </div>
       <div class="stat-item">
@@ -2119,7 +2121,7 @@
 
     <p>마침 '바이브 코딩'이라는 단어가 뉴스에 많이 나올 때였습니다. <strong>'공부한다 생각하고 4학년 교육과정에 맞춰 한국어판으로 한번 만들어볼까?'</strong> 하는 가벼운 마음으로 시도해 봤는데, 어라? 생각보다 비슷하게 구현되더라고요. 그렇게 바이브 코딩으로 만든 첫 번째 게임이 바로 <a href="https://xn--9p4bn1ysod.com/kingmath/" target="_blank">킹수학 배틀</a>이었습니다.</p>
 
-    <p>그 이후로 <strong>'설마 이것도 될까?'</strong> 하는 마음으로 끊임없이 질문하고 연구하며 아이디어를 하나하나 게임으로 개발했습니다. 그렇게 하다 보니 어느덧 <strong>300개가 넘는 게임을 보유한 '킹수학'</strong>이 되었습니다. 나중에는 바이브 코딩 도파민에 빠져서 멈출 수가 없더라고요. ㅎㅎㅎ</p>
+    <p>그 이후로 <strong>'설마 이것도 될까?'</strong> 하는 마음으로 끊임없이 질문하고 연구하며 아이디어를 하나하나 게임으로 개발했습니다. 그렇게 하다 보니 어느덧 <strong>400개가 넘는 게임을 보유한 '킹수학'</strong>이 되었습니다. 나중에는 바이브 코딩 도파민에 빠져서 멈출 수가 없더라고요. ㅎㅎㅎ</p>
 
 <p>킹수학은 기획, 개발, 디자인, 유지보수까지 모든 과정을 <strong>'킹선생' 1인이 직접 총괄하고 운영하는 독립 프로젝트</strong>로 시작했습니다. 초창기부터 300개 정도까지는 단순 무식 <strong>오직 구글 제미나이 채팅창만을 사용</strong>했습니다. 그러다 2026년 중반 안티그래비티(Antigravity) 2.0이 나온 후부터는 구글의 안티그래비티와 클로드(Claude) 등을 함께 활용하며, 상황에 맞춰 다양한 도구를 유연하게 사용하고 있습니다.</p>
 
@@ -2130,7 +2132,7 @@
 
     <p>Around that time, the term "vibe coding" was all over the news. <strong>Thinking of it as a study exercise, I tried building a Korean version tailored to the 4th grade curriculum</strong> — and to my surprise, it came together better than expected. That first game, built through vibe coding, was <a href="https://xn--9p4bn1ysod.com/kingmath/" target="_blank">KingsMath Battle</a>.</p>
 
-    <p>From there, I kept asking <strong>"could this work too?"</strong>, researching constantly and turning ideas into games one by one. Before I knew it, <strong>KingsMath had grown into a platform with over 300 games</strong>. Eventually I got hooked on the dopamine rush of vibe coding and just couldn't stop. Haha.</p>
+    <p>From there, I kept asking <strong>"could this work too?"</strong>, researching constantly and turning ideas into games one by one. Before I knew it, <strong>KingsMath had grown into a platform with over 400 games</strong>. Eventually I got hooked on the dopamine rush of vibe coding and just couldn't stop. Haha.</p>
 
     <p>KingsMath started as an independent project — planning, development, design, and maintenance all handled solely by <strong>"King Teacher."</strong> From the very beginning up to around game #300, I simply <strong>used only the Google Gemini chat window</strong>. Then, after Antigravity 2.0 launched in mid-2026, I began using Google's Antigravity alongside Claude and other tools, flexibly mixing and matching whatever fit the situation.</p>
 
@@ -2153,9 +2155,9 @@
             <div class="story-img-caption"><span lang="ko">다크모드를 기본으로 한 업그레이드 킹수학 배틀</span><span lang="en">Upgraded KingsMath Battle, now with dark mode by default</span></div>
           </div>
           <div class="story-img-wrap">
-            <img src="all.jpg" alt="200여개 게임"
+            <img src="all.jpg" alt="400여개 게임"
               onerror="this.src='https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80'">
-            <div class="story-img-caption"><span lang="ko">킹수학 배틀에서 확장된 200여 개 게임들</span><span lang="en">Over 200 games that grew out of KingsMath Battle</span></div>
+            <div class="story-img-caption"><span lang="ko">킹수학 배틀에서 확장된 400여 개 게임들</span><span lang="en">Over 400 games that grew out of KingsMath Battle</span></div>
           </div>
         </div>
       </div>
@@ -2428,7 +2430,7 @@
               <div class="tl-year ty-green" id="current-date-en" lang="en">Loading date...</div>
               <h3 style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px">
                 <span lang="ko">킹수학 게임 및 웹앱</span><span lang="en">KingsMath Games &amp; Web Apps —</span>
-                <span class="tl-current-num" id="dynamic-game-count-ko" lang="ko">300+</span><span class="tl-current-num" id="dynamic-game-count-en" lang="en">300+</span><span lang="ko">개
+                <span class="tl-current-num" id="dynamic-game-count-ko" lang="ko">400+</span><span class="tl-current-num" id="dynamic-game-count-en" lang="en">400+</span><span lang="ko">개
                 개발 완료.</span><span lang="en">Built and Counting.</span>
               </h3>
               <p style="margin-top:8px;display:flex;align-items:center;font-size:0.88rem">
@@ -2449,7 +2451,7 @@
       <div style="text-align:center;margin-bottom:3rem" class="reveal">
         <div class="section-label sl-yellow">📦 CONTENT LINEUP</div>
         <h2 class="section-title"><span lang="ko">단원별 맞춤 콘텐츠 라인업</span><span lang="en">Content Lineup by Unit</span></h2>
-        <p class="section-sub"><span lang="ko">300여 종의 수학, 영어, 국어, 예체능, 학급운영 에듀테크 콘텐츠</span><span lang="en">300+ edtech resources covering math, English, Korean, arts/PE, and classroom management</span></p>
+        <p class="section-sub"><span lang="ko">400여 종의 수학, 영어, 국어, 예체능, 학급운영 에듀테크 콘텐츠</span><span lang="en">400+ edtech resources covering math, English, Korean, arts/PE, and classroom management</span></p>
       </div>
       <div class="curriculum-filters reveal">
         <button class="filter-chip chip-all active" data-tag="all"><span lang="ko"># 전체보기</span><span lang="en"># All</span></button>
@@ -2528,7 +2530,7 @@
       }
       ['dynamic-game-count-ko', 'dynamic-game-count-en'].forEach(function (id) {
         var el = document.getElementById(id);
-        if (el) el.textContent = '300+';
+        if (el) el.textContent = '400+';
       });
     }
 
