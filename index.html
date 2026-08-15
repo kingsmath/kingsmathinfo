@@ -10,6 +10,19 @@
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem('kingsmath-lang'); } catch (e) {}
+      var lang = saved;
+      if (lang !== 'ko' && lang !== 'en') {
+        var nav = ((navigator.language || navigator.userLanguage || '') + '').toLowerCase();
+        lang = nav.indexOf('ko') === 0 ? 'ko' : 'en';
+      }
+      document.documentElement.lang = lang;
+      if (lang === 'en') document.documentElement.classList.add('lang-en');
+    })();
+  </script>
   <title>킹수학을 소개합니다</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&display=swap"
     rel="stylesheet">
@@ -164,6 +177,72 @@
     .nav-cta:hover {
       transform: translateY(-2px);
       box-shadow: 0 0 28px rgba(255, 214, 0, 0.55);
+    }
+
+    /* ── i18n show/hide (default: Korean) ── */
+    body [lang="en"] {
+      display: none;
+    }
+
+    html.lang-en body [lang="ko"] {
+      display: none;
+    }
+
+    html.lang-en body [lang="en"] {
+      display: inline;
+    }
+
+    body .lang-block[lang="en"] {
+      display: none;
+    }
+
+    html.lang-en body .lang-block[lang="ko"] {
+      display: none;
+    }
+
+    html.lang-en body .lang-block[lang="en"] {
+      display: block;
+    }
+
+    /* ── LANG SWITCH ── */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      padding: 3px;
+      gap: 2px;
+    }
+
+    .lang-btn {
+      appearance: none;
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.55);
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.75rem;
+      letter-spacing: 0.2px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .lang-btn:hover {
+      color: #fff;
+    }
+
+    .lang-btn.active {
+      background: var(--king-yellow);
+      color: #080818;
     }
 
     /* ── HERO ── */
@@ -1829,6 +1908,15 @@
         font-size: 0.8rem;
       }
 
+      .nav-right {
+        gap: 8px;
+      }
+
+      .lang-btn {
+        padding: 5px 9px;
+        font-size: 0.68rem;
+      }
+
       .features-grid {
         grid-template-columns: 1fr;
       }
@@ -1863,18 +1951,24 @@
     <a href="#" class="nav-logo">
       <img src="https://킹수학.com/logo.png" alt="킹수학 로고" onload="this.parentElement.classList.add('has-logo')"
         onerror="this.style.display='none'">
-      <span class="nav-logo-text">킹수학 소개</span>
+      <span class="nav-logo-text"><span lang="ko">킹수학 소개</span><span lang="en">About KingsMath</span></span>
     </a>
     <ul class="nav-links">
-      <li><a href="#highlights">특별함</a></li>
-      <li><a href="#about">개발 스토리</a></li>
-      <li><a href="#features">수업 최적화</a></li>
-      <li><a href="#instruments">악기·음악</a></li>
-      <li><a href="#dashboard">대시보드</a></li>
-      <li><a href="#history">연혁</a></li>
-      <li><a href="#curriculum">콘텐츠</a></li>
+      <li><a href="#highlights"><span lang="ko">특별함</span><span lang="en">Highlights</span></a></li>
+      <li><a href="#about"><span lang="ko">개발 스토리</span><span lang="en">Our Story</span></a></li>
+      <li><a href="#features"><span lang="ko">수업 최적화</span><span lang="en">Class-Optimized</span></a></li>
+      <li><a href="#instruments"><span lang="ko">악기·음악</span><span lang="en">Music</span></a></li>
+      <li><a href="#dashboard"><span lang="ko">대시보드</span><span lang="en">Dashboard</span></a></li>
+      <li><a href="#history"><span lang="ko">연혁</span><span lang="en">History</span></a></li>
+      <li><a href="#curriculum"><span lang="ko">콘텐츠</span><span lang="en">Content</span></a></li>
     </ul>
-    <a href="https://open.kakao.com/o/sLaZ7O9h" target="_blank" class="nav-cta">💬 카톡 문의</a>
+    <div class="nav-right">
+      <div class="lang-switch" role="group" aria-label="Language / 언어 선택">
+        <button type="button" class="lang-btn" data-lang="ko">한국어</button>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <a href="https://open.kakao.com/o/sLaZ7O9h" target="_blank" class="nav-cta"><span lang="ko">💬 카톡 문의</span><span lang="en">💬 KakaoTalk</span></a>
+    </div>
   </nav>
 
   <!-- HERO -->
@@ -1885,28 +1979,43 @@
     <div class="hero-inner">
       <div>
         <div class="hero-badges">
-          <span class="badge badge-gold">🏆 2026 아이스크림 바이브코딩 공모전 최우수상</span>
-          <span class="badge badge-purple">🌐 16개국 언어 지원</span>
+          <span class="badge badge-gold"><span lang="ko">🏆 2026 아이스크림 바이브코딩 공모전 최우수상</span><span lang="en">🏆 2026 i-Scream Vibe Coding Contest Grand Prize</span></span>
+          <span class="badge badge-purple"><span lang="ko">🌐 16개국 언어 지원</span><span lang="en">🌐 Supports 16 Languages</span></span>
         </div>
-        <span class="hero-eyebrow">현직 교사가 만든 · 안전한 학습 놀이터</span>
-        <h1 class="hero-title">전자칠판 게임 맛집</h1>
-        <span class="hero-brand">킹수학</span>
-        <p class="hero-tags">#무광고 &nbsp;#무가입 &nbsp;#무설치 &nbsp;#무료</p>
+        <span class="hero-eyebrow"><span lang="ko">현직 교사가 만든 · 안전한 학습 놀이터</span><span lang="en">Made by a Real Teacher · A Safe Learning Playground</span></span>
+        <h1 class="hero-title"><span lang="ko">전자칠판 게임 맛집</span><span lang="en">The Go-To Spot for Whiteboard Games</span></h1>
+        <span class="hero-brand"><span lang="ko">킹수학</span><span lang="en">KingsMath</span></span>
+        <p class="hero-tags"><span lang="ko">#무광고 &nbsp;#무가입 &nbsp;#무설치 &nbsp;#무료</span><span lang="en">#NoAds &nbsp;#NoSignup &nbsp;#NoInstall &nbsp;#Free</span></p>
         <p class="hero-desc">
-          <strong>Global No.1 세계 최초, 세계 최고 전자칠판 학습도구 플랫폼</strong><br>
-          수학은 물론 <span class="hl">영어, 국어, 사회, 예체능 및 학급운영</span>까지!<br>
-          <span class="hl">바이브 코딩</span>의 좋은 예시!<br>
-          자투리 수업시간? <strong>킹수학 하나면 끝.</strong>
+          <span lang="ko">
+            <strong>Global No.1 세계 최초, 세계 최고 전자칠판 학습도구 플랫폼</strong><br>
+            수학은 물론 <span class="hl">영어, 국어, 사회, 예체능 및 학급운영</span>까지!<br>
+            <span class="hl">바이브 코딩</span>의 좋은 예시!<br>
+            자투리 수업시간? <strong>킹수학 하나면 끝.</strong>
+          </span>
+          <span lang="en">
+            <strong>Global No.1 — The World's First and Best Interactive Whiteboard Learning Platform</strong><br>
+            Beyond math — <span class="hl">English, Korean, social studies, arts/PE and classroom management</span> too!<br>
+            A great example of <span class="hl">vibe coding</span>!<br>
+            A few spare minutes in class? <strong>KingsMath has you covered.</strong>
+          </span>
         </p>
         <div class="hero-btns">
-          <a href="https://www.킹수학.com" target="_blank" class="btn-primary">▶ 킹수학 바로 가기</a>
-          <a href="#highlights" class="btn-ghost">특별함 보기 ↓</a>
+          <a href="https://www.킹수학.com" target="_blank" class="btn-primary"><span lang="ko">▶ 킹수학 바로 가기</span><span lang="en">▶ Go to KingsMath</span></a>
+          <a href="#highlights" class="btn-ghost"><span lang="ko">특별함 보기 ↓</span><span lang="en">See What's Special ↓</span></a>
         </div>
         <div
           style="margin-top:1.4rem;background:rgba(255,255,255,0.035);border:1px solid rgba(255,255,255,0.08);border-radius:13px;padding:0.9rem 1.1rem;font-size:0.8rem;color:rgba(255,255,255,0.42);max-width:440px;line-height:1.7">
-          💡 <strong style="color:rgba(255,255,255,0.65)">접속 주소 안내</strong> — <strong
-            style="color:rgba(255,255,255,0.58)">킹수학.com</strong>과 <strong
-            style="color:rgba(255,255,255,0.58)">kingsmath.com</strong> 두 주소 모두 동일합니다. 교육청망 차단 시 한글 주소를 이용하세요.
+          <span lang="ko">
+            💡 <strong style="color:rgba(255,255,255,0.65)">접속 주소 안내</strong> — <strong
+              style="color:rgba(255,255,255,0.58)">킹수학.com</strong>과 <strong
+              style="color:rgba(255,255,255,0.58)">kingsmath.com</strong> 두 주소 모두 동일합니다. 교육청망 차단 시 한글 주소를 이용하세요.
+          </span>
+          <span lang="en">
+            💡 <strong style="color:rgba(255,255,255,0.65)">Access URL Notice</strong> — Both <strong
+              style="color:rgba(255,255,255,0.58)">킹수학.com</strong> and <strong
+              style="color:rgba(255,255,255,0.58)">kingsmath.com</strong> lead to the exact same site. If one is blocked on your school network, try the other.
+          </span>
         </div>
       </div>
 
@@ -1915,20 +2024,20 @@
           <img id="hero-slide" src="slide-photo-1.jpg" alt="킹수학 수업 모습"
             onerror="this.src='https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80'">
           <div class="hero-mockup-overlay">
-            <p class="hero-mockup-label">🎮 전자칠판 게임 맛집 · 킹수학</p>
+            <p class="hero-mockup-label"><span lang="ko">🎮 전자칠판 게임 맛집 · 킹수학</span><span lang="en">🎮 The Go-To Spot for Whiteboard Games · KingsMath</span></p>
           </div>
         </div>
         <div class="floating-stat stat-a">
           <div class="stat-num">300+</div>
-          <div class="stat-label">게임 &amp; 웹앱</div>
+          <div class="stat-label"><span lang="ko">게임 &amp; 웹앱</span><span lang="en">Games &amp; Apps</span></div>
         </div>
         <div class="floating-stat stat-b">
           <div class="stat-num">16</div>
-          <div class="stat-label">지원 언어</div>
+          <div class="stat-label"><span lang="ko">지원 언어</span><span lang="en">Languages</span></div>
         </div>
         <div class="floating-stat stat-c">
           <div class="stat-num">4無</div>
-          <div class="stat-label">광고·가입·설치·요금</div>
+          <div class="stat-label"><span lang="ko">광고·가입·설치·요금</span><span lang="en">Ads·Signup·Install·Fees</span></div>
         </div>
       </div>
     </div>
@@ -1939,19 +2048,19 @@
     <div class="container">
       <div class="stat-item">
         <div class="num display-font" data-count>300+</div>
-        <div class="desc">게임 &amp; 웹앱 개수</div>
+        <div class="desc"><span lang="ko">게임 &amp; 웹앱 개수</span><span lang="en">Games &amp; Web Apps</span></div>
       </div>
       <div class="stat-item">
         <div class="num display-font">16</div>
-        <div class="desc">지원 언어 수</div>
+        <div class="desc"><span lang="ko">지원 언어 수</span><span lang="en">Languages Supported</span></div>
       </div>
       <div class="stat-item">
-        <div class="num display-font">0원</div>
-        <div class="desc">이용 요금</div>
+        <div class="num display-font"><span lang="ko">0원</span><span lang="en">Free</span></div>
+        <div class="desc"><span lang="ko">이용 요금</span><span lang="en">Cost to Use</span></div>
       </div>
       <div class="stat-item">
-        <div class="num display-font">1위</div>
-        <div class="desc">세계 최초 전자칠판 플랫폼</div>
+        <div class="num display-font"><span lang="ko">1위</span><span lang="en">#1</span></div>
+        <div class="desc"><span lang="ko">세계 최초 전자칠판 플랫폼</span><span lang="en">World's First Whiteboard Platform</span></div>
       </div>
     </div>
   </div>
@@ -1961,8 +2070,8 @@
     <div class="container">
       <div style="text-align:center" class="reveal">
         <div class="section-label sl-yellow">✨ WHAT MAKES US SPECIAL</div>
-        <h2 class="section-title">킹수학만의 3가지 특별함</h2>
-        <p class="section-sub">제가 봐도 이건 좀 잘했습니다.</p>
+        <h2 class="section-title"><span lang="ko">킹수학만의 3가지 특별함</span><span lang="en">3 Things That Make KingsMath Special</span></h2>
+        <p class="section-sub"><span lang="ko">제가 봐도 이건 좀 잘했습니다.</span><span lang="en">Even I have to admit — this part turned out great.</span></p>
       </div>
       <div class="highlights-grid">
         <div class="hl-card reveal">
@@ -1970,8 +2079,8 @@
             onerror="this.src='https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&q=80'">
           <div class="hl-content">
             <div class="hl-icon ic-gold">🎯</div>
-            <h3 class="hl-title">초등 수학 단원별 맞춤 추천</h3>
-            <p class="hl-desc">단원 하나하나마다 할만한 게임을 몇 개씩 만들어 두었습니다. 학년 단원별 게임 찾기도 쉽게 세팅해두었습니다.</p>
+            <h3 class="hl-title"><span lang="ko">초등 수학 단원별 맞춤 추천</span><span lang="en">Custom Picks for Every Elementary Math Unit</span></h3>
+            <p class="hl-desc"><span lang="ko">단원 하나하나마다 할만한 게임을 몇 개씩 만들어 두었습니다. 학년 단원별 게임 찾기도 쉽게 세팅해두었습니다.</span><span lang="en">There are several playable games for every single unit, and finding games by grade and unit is quick and easy.</span></p>
           </div>
         </div>
         <div class="hl-card reveal" style="transition-delay:.1s">
@@ -1979,9 +2088,9 @@
             onerror="this.src='https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80'">
           <div class="hl-content">
             <div class="hl-icon ic-cyan">📚</div>
-            <h3 class="hl-title">수학을 넘어 전 과목까지</h3>
-            <p class="hl-desc">수학 게임을 많이 만들다 보니 다른 과목도 만들면 좋겠더라구요. 영어, 국어, 사회, 과학, 음악, 미술, 학급운영 도구까지! 시작은 수학했지만 끝은
-              교육했습니다.</p>
+            <h3 class="hl-title"><span lang="ko">수학을 넘어 전 과목까지</span><span lang="en">Beyond Math — Every Subject</span></h3>
+            <p class="hl-desc"><span lang="ko">수학 게임을 많이 만들다 보니 다른 과목도 만들면 좋겠더라구요. 영어, 국어, 사회, 과학, 음악, 미술, 학급운영 도구까지! 시작은 수학했지만 끝은
+              교육했습니다.</span><span lang="en">After making so many math games, I figured other subjects deserved the same treatment — English, Korean, social studies, science, music, art, even classroom management tools! I started with math, but ended up covering all of education.</span></p>
           </div>
         </div>
         <div class="hl-card reveal" style="transition-delay:.2s">
@@ -1989,8 +2098,8 @@
             onerror="this.src='https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&q=80'">
           <div class="hl-content">
             <div class="hl-icon ic-purple">🌐</div>
-            <h3 class="hl-title">16개국 언어 지원</h3>
-            <p class="hl-desc">영어, 일본어, 중국어, 베트남어 등 16개국 언어를 완벽하게 지원합니다. K-교육자료의 힘을 보여주겠습니다! 외국 친구 있으면 소개 좀 해주세요. 😅</p>
+            <h3 class="hl-title"><span lang="ko">16개국 언어 지원</span><span lang="en">Supports 16 Languages</span></h3>
+            <p class="hl-desc"><span lang="ko">영어, 일본어, 중국어, 베트남어 등 16개국 언어를 완벽하게 지원합니다. K-교육자료의 힘을 보여주겠습니다! 외국 친구 있으면 소개 좀 해주세요. 😅</span><span lang="en">English, Japanese, Chinese, Vietnamese, and more — 16 languages, fully supported. Time to show the world the power of K-edu content! If you know anyone abroad, please spread the word. 😅</span></p>
           </div>
         </div>
       </div>
@@ -2003,37 +2112,50 @@
       <div class="story-inner">
         <div class="story-text reveal">
           <div class="section-label sl-cyan">👨‍💻 DEVELOPER STORY</div>
-          <h2 class="section-title">외국산 게임이<br>아쉬워서 시작했습니다</h2>
+          <h2 class="section-title"><span lang="ko">외국산 게임이<br>아쉬워서 시작했습니다</span><span lang="en">It Started Because Foreign Games<br>Weren't Quite Enough</span></h2>
 
+    <div lang="ko" class="lang-block">
     <p>저는 대한민국의 초등학교에 근무하고 있는 <strong>20년 차 현직 초등 교사</strong>입니다. 2025년 겨울, 인스타그램 피드에서 여러 학생이 전자칠판으로 수학 게임을 하는 모습을 보았습니다. 외국 프로그램이었는데, 마침 우리 교실에도 신형 전자칠판이 있어 게임 링크를 구해 우리 반 학생들과 함께 해보았죠. 학생들이 정말 좋아하더라고요. 그런데 제가 4학년 담임을 맡고 있다 보니, 뺄셈 문제에서 음수가 나오거나 한국어 지원이 되지 않는 점 등이 아쉽게 느껴졌습니다.</p>
-    
+
     <p>마침 '바이브 코딩'이라는 단어가 뉴스에 많이 나올 때였습니다. <strong>'공부한다 생각하고 4학년 교육과정에 맞춰 한국어판으로 한번 만들어볼까?'</strong> 하는 가벼운 마음으로 시도해 봤는데, 어라? 생각보다 비슷하게 구현되더라고요. 그렇게 바이브 코딩으로 만든 첫 번째 게임이 바로 <a href="https://xn--9p4bn1ysod.com/kingmath/" target="_blank">킹수학 배틀</a>이었습니다.</p>
-    
+
     <p>그 이후로 <strong>'설마 이것도 될까?'</strong> 하는 마음으로 끊임없이 질문하고 연구하며 아이디어를 하나하나 게임으로 개발했습니다. 그렇게 하다 보니 어느덧 <strong>300개가 넘는 게임을 보유한 '킹수학'</strong>이 되었습니다. 나중에는 바이브 코딩 도파민에 빠져서 멈출 수가 없더라고요. ㅎㅎㅎ</p>
-    
+
 <p>킹수학은 기획, 개발, 디자인, 유지보수까지 모든 과정을 <strong>'킹선생' 1인이 직접 총괄하고 운영하는 독립 프로젝트</strong>로 시작했습니다. 초창기부터 300개 정도까지는 단순 무식 <strong>오직 구글 제미나이 채팅창만을 사용</strong>했습니다. 그러다 2026년 중반 안티그래비티(Antigravity) 2.0이 나온 후부터는 구글의 안티그래비티와 클로드(Claude) 등을 함께 활용하며, 상황에 맞춰 다양한 도구를 유연하게 사용하고 있습니다.</p>
 
 <p>그리고 지금은 킹수학 혼자만의 공간을 넘어, <strong>훌륭한 선생님들이 엄선한 프로그램을 함께 소개</strong>하기 시작했습니다. <strong>'명장킹'</strong>을 통해 멋진 제작자 선생님들의 프로그램도 안내하고 있습니다.</p>
-          <div class="story-note">명장킹에 함께할 제작자 선생님을 기다립니다. 아래 버튼을 눌러 자세한 소개를 확인해 보세요.</div>
+    </div>
+    <div lang="en" class="lang-block">
+    <p>I'm a <strong>20-year elementary school teacher</strong> in South Korea. In the winter of 2025, I saw a video on my Instagram feed of students playing math games on an interactive whiteboard. It was a foreign program, and since my own classroom had a new whiteboard, I got the link and tried it with my students. They loved it. But since I teach 4th grade, a few things bothered me — like subtraction problems producing negative numbers, and no Korean language support.</p>
+
+    <p>Around that time, the term "vibe coding" was all over the news. <strong>Thinking of it as a study exercise, I tried building a Korean version tailored to the 4th grade curriculum</strong> — and to my surprise, it came together better than expected. That first game, built through vibe coding, was <a href="https://xn--9p4bn1ysod.com/kingmath/" target="_blank">KingsMath Battle</a>.</p>
+
+    <p>From there, I kept asking <strong>"could this work too?"</strong>, researching constantly and turning ideas into games one by one. Before I knew it, <strong>KingsMath had grown into a platform with over 300 games</strong>. Eventually I got hooked on the dopamine rush of vibe coding and just couldn't stop. Haha.</p>
+
+    <p>KingsMath started as an independent project — planning, development, design, and maintenance all handled solely by <strong>"King Teacher."</strong> From the very beginning up to around game #300, I simply <strong>used only the Google Gemini chat window</strong>. Then, after Antigravity 2.0 launched in mid-2026, I began using Google's Antigravity alongside Claude and other tools, flexibly mixing and matching whatever fit the situation.</p>
+
+    <p>And now, KingsMath has grown beyond a one-person space — I've started <strong>featuring hand-picked programs from other talented teachers</strong> too. Through <strong>"Master King,"</strong> I'm introducing programs from amazing creator-teachers as well.</p>
+    </div>
+          <div class="story-note"><span lang="ko">명장킹에 함께할 제작자 선생님을 기다립니다. 아래 버튼을 눌러 자세한 소개를 확인해 보세요.</span><span lang="en">Looking for creator-teachers to join Master King. Click the button below for details.</span></div>
           <div class="story-cta">
-            <a href="https://mjking.netlify.app/" target="_blank" class="btn-small">명장킹 제작자 선생님 모집 페이지 보기</a>
+            <a href="https://mjking.netlify.app/" target="_blank" class="btn-small"><span lang="ko">명장킹 제작자 선생님 모집 페이지 보기</span><span lang="en">See the Master King Creator Recruitment Page</span></a>
           </div>
         </div>
         <div class="story-images reveal" style="transition-delay:.15s">
           <div class="story-img-wrap">
             <img src="before.jpg" alt="초기 킹수학 배틀"
               onerror="this.src='https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80'">
-            <div class="story-img-caption">처음 개발했던 킹수학 배틀 초기 모습</div>
+            <div class="story-img-caption"><span lang="ko">처음 개발했던 킹수학 배틀 초기 모습</span><span lang="en">The original early version of KingsMath Battle</span></div>
           </div>
           <div class="story-img-wrap">
             <img src="after.jpg" alt="업그레이드 킹수학"
               onerror="this.src='https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&q=80'">
-            <div class="story-img-caption">다크모드를 기본으로 한 업그레이드 킹수학 배틀</div>
+            <div class="story-img-caption"><span lang="ko">다크모드를 기본으로 한 업그레이드 킹수학 배틀</span><span lang="en">Upgraded KingsMath Battle, now with dark mode by default</span></div>
           </div>
           <div class="story-img-wrap">
             <img src="all.jpg" alt="200여개 게임"
               onerror="this.src='https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&q=80'">
-            <div class="story-img-caption">킹수학 배틀에서 확장된 200여 개 게임들</div>
+            <div class="story-img-caption"><span lang="ko">킹수학 배틀에서 확장된 200여 개 게임들</span><span lang="en">Over 200 games that grew out of KingsMath Battle</span></div>
           </div>
         </div>
       </div>
@@ -2041,9 +2163,9 @@
         <div class="github-box">
           <span style="font-size:1.5rem">🐙</span>
           <div>
-            <h4>게임 파일 모두를 공유합니다.</h4>
-            <p>킹수학의 게임 파일은 누구나 다운받을 수 있도록 깃허브에 공유되어 있습니다. 코드를 활용해 <strong>우리 반 맞춤형 놀이 학습 사이트</strong>를 만들어보세요!</p>
-            <a href="https://github.com/kingsmath/web-games" target="_blank">GitHub 소스코드 보러가기 →</a>
+            <h4><span lang="ko">게임 파일 모두를 공유합니다.</span><span lang="en">All game files are open source.</span></h4>
+            <p><span lang="ko">킹수학의 게임 파일은 누구나 다운받을 수 있도록 깃허브에 공유되어 있습니다. 코드를 활용해 <strong>우리 반 맞춤형 놀이 학습 사이트</strong>를 만들어보세요!</span><span lang="en">KingsMath's game files are shared on GitHub for anyone to download. Use the code to build <strong>your own custom play-based learning site</strong> for your classroom!</span></p>
+            <a href="https://github.com/kingsmath/web-games" target="_blank"><span lang="ko">GitHub 소스코드 보러가기 →</span><span lang="en">View Source Code on GitHub →</span></a>
           </div>
         </div>
       </div>
@@ -2060,27 +2182,28 @@
         </div>
         <div class="reveal" style="transition-delay:.1s">
           <div class="section-label sl-purple">🎨 BRAND IDENTITY</div>
-          <h2 class="section-title">미지의 수학 세계를 정복할<br><span
+          <h2 class="section-title"><span lang="ko">미지의 수학 세계를 정복할<br><span
               style="background:linear-gradient(135deg,#c4b5fd,#FF2D78);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">킹수학(Kingsmath)
-              로고</span></h2>
-          <p class="section-sub" style="margin-bottom:1.8rem">수학을 어렵게 느끼는 학생들에게는 친근하게 다가가고, 동시에 글로벌 수학 교육의 리더로 발돋움하겠다는
-            포부를 시각적으로 담아냈습니다.</p>
+              로고</span></span><span lang="en">The Logo That Will Conquer<br><span
+              style="background:linear-gradient(135deg,#c4b5fd,#FF2D78);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">the Unknown World of Math — KingsMath</span></span></h2>
+          <p class="section-sub" style="margin-bottom:1.8rem"><span lang="ko">수학을 어렵게 느끼는 학생들에게는 친근하게 다가가고, 동시에 글로벌 수학 교육의 리더로 발돋움하겠다는
+            포부를 시각적으로 담아냈습니다.</span><span lang="en">It's designed to feel approachable for students who find math difficult, while visually expressing the ambition to become a global leader in math education.</span></p>
           <div class="logo-details">
             <div class="logo-detail-card">
-              <h4 style="color:#c4b5fd">🟣 신비로운 테마색, 보라</h4>
-              <p>로고 전반을 감싸는 보라색은 <strong>'아직 탐험하지 못한 미지의 세계'</strong>이자 <strong>'수학의 세계'</strong>를 상징합니다.</p>
+              <h4 style="color:#c4b5fd"><span lang="ko">🟣 신비로운 테마색, 보라</span><span lang="en">🟣 A Mysterious Theme Color: Purple</span></h4>
+              <p><span lang="ko">로고 전반을 감싸는 보라색은 <strong>'아직 탐험하지 못한 미지의 세계'</strong>이자 <strong>'수학의 세계'</strong>를 상징합니다.</span><span lang="en">The purple wrapped around the logo symbolizes <strong>"the unexplored unknown"</strong> and <strong>"the world of math."</strong></span></p>
             </div>
             <div class="logo-detail-card">
-              <h4 style="color:var(--king-yellow)">👑 왕관을 쓴 사자</h4>
-              <p>동물의 왕 사자에게 왕관을 씌워, 킹수학과 함께라면 누구나 <strong>'수학의 왕'</strong>이 될 수 있다는 자신감을 표현했습니다.</p>
+              <h4 style="color:var(--king-yellow)"><span lang="ko">👑 왕관을 쓴 사자</span><span lang="en">👑 A Crowned Lion</span></h4>
+              <p><span lang="ko">동물의 왕 사자에게 왕관을 씌워, 킹수학과 함께라면 누구나 <strong>'수학의 왕'</strong>이 될 수 있다는 자신감을 표현했습니다.</span><span lang="en">A crown on the king of animals — the lion — expresses the confidence that with KingsMath, anyone can become <strong>"the king of math."</strong></span></p>
             </div>
             <div class="logo-detail-card">
-              <h4 style="color:#ffabc5">😄 사자의 눈과 코 'ㅋㅅㅎ'</h4>
-              <p>사자 얼굴의 눈과 코가 <strong>'킹수학'의 한글 자음(ㅋ, ㅅ, ㅎ)</strong>으로 되어 있어요. 킹수학이 대한민국의 K-교육자료임을 강조합니다.</p>
+              <h4 style="color:#ffabc5"><span lang="ko">😄 사자의 눈과 코 'ㅋㅅㅎ'</span><span lang="en">😄 The Lion's Eyes and Nose: 'ㅋㅅㅎ'</span></h4>
+              <p><span lang="ko">사자 얼굴의 눈과 코가 <strong>'킹수학'의 한글 자음(ㅋ, ㅅ, ㅎ)</strong>으로 되어 있어요. 킹수학이 대한민국의 K-교육자료임을 강조합니다.</span><span lang="en">The lion's eyes and nose are formed from <strong>the Korean consonants (ㅋ, ㅅ, ㅎ) in "KingsMath"</strong>, emphasizing that KingsMath is proud K-edu content from Korea.</span></p>
             </div>
             <div class="logo-detail-card">
-              <h4 style="color:var(--king-cyan)">🌐 글로벌 비전, Kingsmath</h4>
-              <p>하단의 영문 텍스트는 '수학의 왕'을 뜻함과 동시에, 글로벌 시장을 향해 뻗어나가는 <strong>킹수학의 도메인</strong>을 의미합니다.</p>
+              <h4 style="color:var(--king-cyan)"><span lang="ko">🌐 글로벌 비전, Kingsmath</span><span lang="en">🌐 A Global Vision: Kingsmath</span></h4>
+              <p><span lang="ko">하단의 영문 텍스트는 '수학의 왕'을 뜻함과 동시에, 글로벌 시장을 향해 뻗어나가는 <strong>킹수학의 도메인</strong>을 의미합니다.</span><span lang="en">The English text below means "King of Math," while also representing <strong>KingsMath's domain</strong> as it expands into the global market.</span></p>
             </div>
           </div>
         </div>
@@ -2093,39 +2216,46 @@
     <div class="container">
       <div style="text-align:center" class="reveal">
         <div class="section-label sl-pink">⚡ CLASS-OPTIMIZED</div>
-        <h2 class="section-title">수업에 최적화된 게임들</h2>
-        <p class="section-sub"><strong style="color:var(--king-yellow)">수업 앞뒤 10분</strong> 즐기기 좋게 <strong
+        <h2 class="section-title"><span lang="ko">수업에 최적화된 게임들</span><span lang="en">Games Optimized for the Classroom</span></h2>
+        <p class="section-sub"><span lang="ko"><strong style="color:var(--king-yellow)">수업 앞뒤 10분</strong> 즐기기 좋게 <strong
             style="color:var(--king-yellow)">한 판 1분</strong> 내외, <strong
-            style="color:var(--king-yellow)">4~6인용</strong>으로 제작했습니다.</p>
+            style="color:var(--king-yellow)">4~6인용</strong>으로 제작했습니다.</span><span lang="en">Built to be enjoyed in <strong
+            style="color:var(--king-yellow)">the 10 minutes before or after class</strong> — each round runs about <strong
+            style="color:var(--king-yellow)">1 minute</strong>, for <strong
+            style="color:var(--king-yellow)">4-6 players</strong>.</span></p>
       </div>
       <div class="features-grid">
         <div class="feat-card reveal"><span class="feat-icon">🚫</span>
           <h3 class="feat-title">무광고 (No Ads)</h3>
-          <p class="feat-desc">야한 광고, 게임 광고 없어요.<br><strong>안심하고 쓰세요.</strong></p>
+          <p class="feat-desc"><span lang="ko">야한 광고, 게임 광고 없어요.<br><strong>안심하고 쓰세요.</strong></span><span lang="en">No inappropriate ads, no game ads.<br><strong>Use it worry-free.</strong></span></p>
         </div>
         <div class="feat-card reveal" style="transition-delay:.08s"><span class="feat-icon">🙅</span>
           <h3 class="feat-title">무가입 (No Sign-up)</h3>
-          <p class="feat-desc"><strong>회원 가입?</strong> 그런 거 없어요.<br><strong>개인정보 수집?</strong> 그런 거 없어요.</p>
+          <p class="feat-desc"><span lang="ko"><strong>회원 가입?</strong> 그런 거 없어요.<br><strong>개인정보 수집?</strong> 그런 거 없어요.</span><span lang="en"><strong>Sign up?</strong> No such thing.<br><strong>Collecting personal data?</strong> Not here.</span></p>
         </div>
         <div class="feat-card reveal" style="transition-delay:.16s"><span class="feat-icon">📱</span>
           <h3 class="feat-title">무설치 (No Install)</h3>
-          <p class="feat-desc">킹수학.com 링크 하나면<br><strong>뚝딱!</strong> 바로 실행됩니다.</p>
+          <p class="feat-desc"><span lang="ko">킹수학.com 링크 하나면<br><strong>뚝딱!</strong> 바로 실행됩니다.</span><span lang="en">Just one link — 킹수학.com —<br>and it's <strong>instantly</strong> up and running.</span></p>
         </div>
         <div class="feat-card reveal" style="transition-delay:.24s"><span class="feat-icon">🎁</span>
           <h3 class="feat-title">무료 (Free)</h3>
-          <p class="feat-desc">킹수학은 모두 <strong>무료</strong>입니다.<br>사비로 운영한다고 생색냅니다.</p>
+          <p class="feat-desc"><span lang="ko">킹수학은 모두 <strong>무료</strong>입니다.<br>사비로 운영한다고 생색냅니다.</span><span lang="en">Everything on KingsMath is <strong>free</strong>.<br>(And yes, I like to brag that I fund it myself.)</span></p>
         </div>
       </div>
       <div class="support-box reveal">
         <div>
-          <h4>☕ 킹수학을 응원해 주세요</h4>
-          <p>현재 호스팅·도메인·AI 구독료 등 모든 운영비는 킹선생의 사비로 충당하고 있습니다.<br>
+          <h4><span lang="ko">☕ 킹수학을 응원해 주세요</span><span lang="en">☕ Support KingsMath</span></h4>
+          <p>
+            <span lang="ko">현재 호스팅·도메인·AI 구독료 등 모든 운영비는 킹선생의 사비로 충당하고 있습니다.<br>
             매달 후원 목표액은 소박하게 <strong>아이스 아메리카노 한 잔(4,700원)</strong>입니다. ☕<br>
-            <strong>네이버페이, 카카오페이</strong>로도 간편하게 후원하실 수 있습니다.
+            <strong>네이버페이, 카카오페이</strong>로도 간편하게 후원하실 수 있습니다.</span>
+            <span lang="en">All operating costs — hosting, domain, AI subscriptions — are currently covered out of King Teacher's own pocket.<br>
+            The modest monthly goal is just <strong>the price of one iced Americano</strong>. ☕<br>
+            You can also support easily via <strong>Naver Pay or Kakao Pay</strong> (Korean payment services).</span>
           </p>
         </div>
         <a href="https://litt.ly/kingsmath" target="_blank" class="btn-primary"
-          style="white-space:nowrap;flex-shrink:0">커피 한 잔 보내주기 ☕</a>
+          style="white-space:nowrap;flex-shrink:0"><span lang="ko">커피 한 잔 보내주기 ☕</span><span lang="en">Buy Me a Coffee ☕</span></a>
       </div>
       <div class="reveal" style="margin-top:4rem">
         <div
@@ -2136,7 +2266,7 @@
             style="position:absolute;inset:0;background:rgba(7,7,20,0.55);display:flex;align-items:center;justify-content:center;padding:2rem;text-align:center">
             <p
               style="font-size:1.3rem;font-weight:800;color:#fff;line-height:1.6;text-shadow:0 2px 12px rgba(0,0,0,0.8)">
-              "학생들이 좋아하고, 배움이 절로 생기는<br>콘텐츠를 지향합니다."</p>
+              <span lang="ko">"학생들이 좋아하고, 배움이 절로 생기는<br>콘텐츠를 지향합니다."</span><span lang="en">"We aim to create content<br>students love — and naturally learn from."</span></p>
           </div>
         </div>
       </div>
@@ -2148,50 +2278,50 @@
     <div class="container">
       <div style="text-align:center" class="reveal">
         <div class="section-label sl-purple">🎵 MUSIC &amp; INSTRUMENTS</div>
-        <h2 class="section-title">킹수학이 자랑하는<br>악기 · 음악 콘텐츠</h2>
-        <p class="section-sub">음악 교육에 진심입니다. 킹수학과 함께라면 음악도 재미있어요.</p>
+        <h2 class="section-title"><span lang="ko">킹수학이 자랑하는<br>악기 · 음악 콘텐츠</span><span lang="en">KingsMath's Pride:<br>Instrument &amp; Music Content</span></h2>
+        <p class="section-sub"><span lang="ko">음악 교육에 진심입니다. 킹수학과 함께라면 음악도 재미있어요.</span><span lang="en">We're serious about music education. With KingsMath, music is fun too.</span></p>
       </div>
       <div class="music-grid">
         <div class="music-card reveal">
           <div class="music-card-header">
             <div class="music-icon mi-blue">🖥️</div>
             <div>
-              <h3>전자칠판용</h3>
-              <p>교실 앞으로 나와 다함께 즐기는 콘텐츠</p>
+              <h3><span lang="ko">전자칠판용</span><span lang="en">For Interactive Whiteboards</span></h3>
+              <p><span lang="ko">교실 앞으로 나와 다함께 즐기는 콘텐츠</span><span lang="en">Content to enjoy together at the front of the classroom</span></p>
             </div>
           </div>
           <ul class="music-list">
             <li class="music-item"><span>🎼 오선지 연주킹</span><a href="https://kingsmath.com/king_music_5/" target="_blank"
-                class="play-btn pb-blue">▶ 플레이</a></li>
+                class="play-btn pb-blue"><span lang="ko">▶ 플레이</span><span lang="en">▶ Play</span></a></li>
             <li class="music-item"><span>🎹 전자칠판 킹피아노</span><a href="https://kingsmath.com/king_music_piano/piano.html"
-                target="_blank" class="play-btn pb-blue">▶ 플레이</a></li>
+                target="_blank" class="play-btn pb-blue"><span lang="ko">▶ 플레이</span><span lang="en">▶ Play</span></a></li>
             <li class="music-item"><span>🎶 합주킹</span><a href="https://kingsmath.com/king_ensemble/" target="_blank"
-                class="play-btn pb-blue">▶ 플레이</a></li>
+                class="play-btn pb-blue"><span lang="ko">▶ 플레이</span><span lang="en">▶ Play</span></a></li>
             <li class="music-item"><span>🎹 피아노킹</span><a href="https://kingsmath.com/king_music_piano/" target="_blank"
-                class="play-btn pb-blue">▶ 플레이</a></li>
+                class="play-btn pb-blue"><span lang="ko">▶ 플레이</span><span lang="en">▶ Play</span></a></li>
             <li class="music-item"><span>🎵 계이름킹</span><a href="https://www.xn--9p4bn1ysod.com/kingmusic_doremi/"
-                target="_blank" class="play-btn pb-blue">▶ 플레이</a></li>
+                target="_blank" class="play-btn pb-blue"><span lang="ko">▶ 플레이</span><span lang="en">▶ Play</span></a></li>
           </ul>
         </div>
         <div class="music-card reveal" style="transition-delay:.1s">
           <div class="music-card-header">
             <div class="music-icon mi-green">📱</div>
             <div>
-              <h3>스마트폰 · 패드용</h3>
-              <p>학생 각자의 기기로 몰입하는 콘텐츠</p>
+              <h3><span lang="ko">스마트폰 · 패드용</span><span lang="en">For Smartphones &amp; Tablets</span></h3>
+              <p><span lang="ko">학생 각자의 기기로 몰입하는 콘텐츠</span><span lang="en">Content for immersive play on each student's own device</span></p>
             </div>
           </div>
           <ul class="music-list">
             <li class="music-item"><span>🎧 킹디사이저 모바일</span><a href="https://kingsmath.com/smart_kingthesizer/"
-                target="_blank" class="play-btn pb-green">▶ 플레이</a></li>
+                target="_blank" class="play-btn pb-green"><span lang="ko">▶ 플레이</span><span lang="en">▶ Play</span></a></li>
             <li class="music-item"><span>🎸 코드킹 모바일</span><a href="https://kingsmath.com/smart_chord/" target="_blank"
-                class="play-btn pb-green">▶ 플레이</a></li>
+                class="play-btn pb-green"><span lang="ko">▶ 플레이</span><span lang="en">▶ Play</span></a></li>
             <li class="music-item"><span>🎹 피아노킹 모바일</span><a href="https://kingsmath.com/smart_piano/" target="_blank"
-                class="play-btn pb-green">▶ 플레이</a></li>
+                class="play-btn pb-green"><span lang="ko">▶ 플레이</span><span lang="en">▶ Play</span></a></li>
             <li class="music-item"><span>🥁 비트킹 모바일</span><a href="https://kingsmath.com/smart_beat/" target="_blank"
-                class="play-btn pb-green">▶ 플레이</a></li>
+                class="play-btn pb-green"><span lang="ko">▶ 플레이</span><span lang="en">▶ Play</span></a></li>
             <li class="music-item"><span>🎵 음표킹 모바일</span><a href="https://kingsmath.com/smart_musicnote/"
-                target="_blank" class="play-btn pb-green">▶ 플레이</a></li>
+                target="_blank" class="play-btn pb-green"><span lang="ko">▶ 플레이</span><span lang="en">▶ Play</span></a></li>
           </ul>
         </div>
       </div>
@@ -2205,20 +2335,20 @@
         <div class="dashboard-img-wrap reveal">
           <img src="https://11ukul.com/king_dashboard/1.jpg" alt="킹수학 대시보드">
           <div class="dashboard-tags">
-            <span class="d-tag">#급식/시간표</span>
-            <span class="d-tag">#학생뽑기</span>
-            <span class="d-tag">#타이머/칠판</span>
+            <span class="d-tag"><span lang="ko">#급식/시간표</span><span lang="en">#Meals/Schedule</span></span>
+            <span class="d-tag"><span lang="ko">#학생뽑기</span><span lang="en">#StudentPicker</span></span>
+            <span class="d-tag"><span lang="ko">#타이머/칠판</span><span lang="en">#Timer/Board</span></span>
           </div>
         </div>
         <div class="dashboard-text reveal" style="transition-delay:.15s">
           <div class="section-label sl-cyan">🖥️ CLASSROOM DASHBOARD</div>
-          <h2 class="section-title">텅텅 빈 TV쪽 모니터<br>바탕화면에 멋과 실용성을 더하다.</h2>
-          <p>"쉬는 시간 몇 분 남았어요?", "오늘 급식 뭐예요?" 쏟아지는 질문에 이제 대답하지 마시고 손가락만 가리키세요! 급식, 시간표, 타이머, 학생 뽑기, 학급 알림까지 교사 맞춤 실시간 반응형
-            바탕화면이 다 해줍니다. <strong>이제 한껏 거들먹거리셔도 됩니다. ㅋㅋ</strong></p>
+          <h2 class="section-title"><span lang="ko">텅텅 빈 TV쪽 모니터<br>바탕화면에 멋과 실용성을 더하다.</span><span lang="en">That Empty TV Monitor<br>Now Has Style and Function.</span></h2>
+          <p><span lang="ko">"쉬는 시간 몇 분 남았어요?", "오늘 급식 뭐예요?" 쏟아지는 질문에 이제 대답하지 마시고 손가락만 가리키세요! 급식, 시간표, 타이머, 학생 뽑기, 학급 알림까지 교사 맞춤 실시간 반응형
+            바탕화면이 다 해줍니다. <strong>이제 한껏 거들먹거리셔도 됩니다. ㅋㅋ</strong></span><span lang="en">"How many minutes left until break?" "What's for lunch today?" Stop answering those endless questions — just point! Meal menus, schedules, timers, a student picker, class announcements — this teacher-customized, real-time dashboard handles it all. <strong>Now you can act as smug as you like. Haha.</strong></span></p>
           <div class="dashboard-btns">
-            <a href="https://xn--9p4bn1ysod.com/king_dashboard/" target="_blank" class="btn-ghost">👀 살펴보기</a>
+            <a href="https://xn--9p4bn1ysod.com/king_dashboard/" target="_blank" class="btn-ghost"><span lang="ko">👀 살펴보기</span><span lang="en">👀 Take a Look</span></a>
             <a href="https://docs.google.com/presentation/d/1vUxFvM8HNLnWZOJbltaPFCvGy-BjS-Y_AaLUHyISoKo/edit?usp=sharing"
-              target="_blank" class="btn-primary">⬇ 쉽게 설치하기</a>
+              target="_blank" class="btn-primary"><span lang="ko">⬇ 쉽게 설치하기</span><span lang="en">⬇ Easy Install Guide</span></a>
           </div>
         </div>
       </div>
@@ -2230,7 +2360,7 @@
     <div class="container">
       <div style="text-align:center;margin-bottom:1rem" class="reveal">
         <div class="section-label sl-yellow">🚀 HISTORY</div>
-        <h2 class="section-title">킹수학이 걸어온 길</h2>
+        <h2 class="section-title"><span lang="ko">킹수학이 걸어온 길</span><span lang="en">The KingsMath Journey</span></h2>
       </div>
       <div style="max-width:720px;margin:0 auto" class="reveal">
         <div class="timeline-track">
@@ -2238,70 +2368,71 @@
           <div class="tl-item">
             <div class="tl-dot dot-blue"></div>
             <div class="tl-card">
-              <div class="tl-year ty-blue">2020년</div>
-              <h3>수학 부진 학생 진단 · 도움 자료 사이트 킹수학.com 오픈</h3>
+              <div class="tl-year ty-blue"><span lang="ko">2020년</span><span lang="en">2020</span></div>
+              <h3><span lang="ko">수학 부진 학생 진단 · 도움 자료 사이트 킹수학.com 오픈</span><span lang="en">Launched 킹수학.com — a diagnostic &amp; support site for struggling math students</span></h3>
               <a href="https://sites.google.com/view/kingsmathdotcom?pli=1" target="_blank"
                 style="display:inline-flex;align-items:center;gap:5px;margin-top:10px;color:#93b4fd;font-weight:700;font-size:0.82rem;text-decoration:none">→
-                당시 프로그램 보기</a>
+                <span lang="ko">당시 프로그램 보기</span><span lang="en">View the original program</span></a>
             </div>
           </div>
 
           <div class="tl-item">
             <div class="tl-dot dot-blue"></div>
             <div class="tl-card">
-              <div class="tl-year ty-blue">2025년 12월</div>
-              <h3>첫 게임 '킹수학 배틀' 바이브코딩으로 개발</h3>
-              <p>이후 밤낮으로 킹수학 게임 개발</p>
+              <div class="tl-year ty-blue"><span lang="ko">2025년 12월</span><span lang="en">December 2025</span></div>
+              <h3><span lang="ko">첫 게임 '킹수학 배틀' 바이브코딩으로 개발</span><span lang="en">Developed the first game, "KingsMath Battle," via vibe coding</span></h3>
+              <p><span lang="ko">이후 밤낮으로 킹수학 게임 개발</span><span lang="en">Kept developing KingsMath games day and night from then on</span></p>
             </div>
           </div>
 
           <div class="tl-item">
             <div class="tl-dot dot-blue"></div>
             <div class="tl-card">
-              <div class="tl-year ty-blue">2026년 3월</div>
-              <h3>글로벌 다국어 지원 및 다과목 포털로 리뉴얼</h3>
-              <p>16개국 언어 지원 업그레이드 / 글로벌 도메인 kingsmath.com 런칭</p>
+              <div class="tl-year ty-blue"><span lang="ko">2026년 3월</span><span lang="en">March 2026</span></div>
+              <h3><span lang="ko">글로벌 다국어 지원 및 다과목 포털로 리뉴얼</span><span lang="en">Relaunched as a multilingual, multi-subject portal</span></h3>
+              <p><span lang="ko">16개국 언어 지원 업그레이드 / 글로벌 도메인 kingsmath.com 런칭</span><span lang="en">Upgraded to support 16 languages / Launched the global domain kingsmath.com</span></p>
             </div>
           </div>
 
           <div class="tl-item">
             <div class="tl-dot dot-yellow"></div>
             <div class="tl-card tl-card-award">
-              <div class="tl-year ty-yellow">2026년 4월</div>
-              <h3>🏆 아이스크림 바이브코딩 공모전 최우수상 수상</h3>
+              <div class="tl-year ty-yellow"><span lang="ko">2026년 4월</span><span lang="en">April 2026</span></div>
+              <h3><span lang="ko">🏆 아이스크림 바이브코딩 공모전 최우수상 수상</span><span lang="en">🏆 Won the Grand Prize at the i-Scream Vibe Coding Contest</span></h3>
             </div>
           </div>
           <div class="tl-item">
             <div class="tl-dot dot-yellow"></div>
             <div class="tl-card">
-              <div class="tl-year ty-blue">2026년 6월 22일</div>
-              <h3>게임 및 웹앱 제작 업로드 300개 돌파</h3>
+              <div class="tl-year ty-blue"><span lang="ko">2026년 6월 22일</span><span lang="en">June 22, 2026</span></div>
+              <h3><span lang="ko">게임 및 웹앱 제작 업로드 300개 돌파</span><span lang="en">Surpassed 300 games and web apps created</span></h3>
             </div>
           </div>
 
         <div class="tl-item">
             <div class="tl-dot dot-blue"></div>
             <div class="tl-card">
-              <div class="tl-year ty-blue">2026년 7월</div>
-              <h3>'명장킹' 카테고리 개설</h3>
-              <p>훌륭한 제작자 선생님들의 프로그램을 함께 소개 시작</p>
+              <div class="tl-year ty-blue"><span lang="ko">2026년 7월</span><span lang="en">July 2026</span></div>
+              <h3><span lang="ko">'명장킹' 카테고리 개설</span><span lang="en">Launched the "Master King" category</span></h3>
+              <p><span lang="ko">훌륭한 제작자 선생님들의 프로그램을 함께 소개 시작</span><span lang="en">Began featuring programs from talented creator-teachers</span></p>
             </div>
           </div>
 
 
-          
+
           <div class="tl-item">
             <div class="tl-dot dot-green"></div>
             <div class="tl-card tl-card-live">
-              <div class="tl-badge-now">● 현재 진행형</div>
-              <div class="tl-year ty-green" id="current-date">날짜 불러오는 중...</div>
+              <div class="tl-badge-now"><span lang="ko">● 현재 진행형</span><span lang="en">● Ongoing</span></div>
+              <div class="tl-year ty-green" id="current-date-ko" lang="ko">날짜 불러오는 중...</div>
+              <div class="tl-year ty-green" id="current-date-en" lang="en">Loading date...</div>
               <h3 style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px">
-                킹수학 게임 및 웹앱
-                <span class="tl-current-num" id="dynamic-game-count">300+</span>개
-                개발 완료.
+                <span lang="ko">킹수학 게임 및 웹앱</span><span lang="en">KingsMath Games &amp; Web Apps —</span>
+                <span class="tl-current-num" id="dynamic-game-count-ko" lang="ko">300+</span><span class="tl-current-num" id="dynamic-game-count-en" lang="en">300+</span><span lang="ko">개
+                개발 완료.</span><span lang="en">Built and Counting.</span>
               </h3>
               <p style="margin-top:8px;display:flex;align-items:center;font-size:0.88rem">
-                그리고 계속 개발중
+                <span lang="ko">그리고 계속 개발중</span><span lang="en">And more being made</span>
                 <span class="tl-dots-anim"><span></span><span></span><span></span></span>
               </p>
             </div>
@@ -2317,22 +2448,22 @@
     <div class="container">
       <div style="text-align:center;margin-bottom:3rem" class="reveal">
         <div class="section-label sl-yellow">📦 CONTENT LINEUP</div>
-        <h2 class="section-title">단원별 맞춤 콘텐츠 라인업</h2>
-        <p class="section-sub">300여 종의 수학, 영어, 국어, 예체능, 학급운영 에듀테크 콘텐츠</p>
+        <h2 class="section-title"><span lang="ko">단원별 맞춤 콘텐츠 라인업</span><span lang="en">Content Lineup by Unit</span></h2>
+        <p class="section-sub"><span lang="ko">300여 종의 수학, 영어, 국어, 예체능, 학급운영 에듀테크 콘텐츠</span><span lang="en">300+ edtech resources covering math, English, Korean, arts/PE, and classroom management</span></p>
       </div>
       <div class="curriculum-filters reveal">
-        <button class="filter-chip chip-all active" data-tag="all"># 전체보기</button>
-        <button class="filter-chip chip-math" data-tag="Numbers"># 수학 (수와연산)</button>
-        <button class="filter-chip chip-math" data-tag="Geometry"># 수학 (도형)</button>
-        <button class="filter-chip chip-lang" data-tag="language"># 영어 / 국어</button>
-        <button class="filter-chip chip-arts" data-tag="arts"># 음악 / 미술</button>
-        <button class="filter-chip chip-class" data-tag="kingclass"># 학급운영</button>
+        <button class="filter-chip chip-all active" data-tag="all"><span lang="ko"># 전체보기</span><span lang="en"># All</span></button>
+        <button class="filter-chip chip-math" data-tag="Numbers"><span lang="ko"># 수학 (수와연산)</span><span lang="en"># Math (Numbers)</span></button>
+        <button class="filter-chip chip-math" data-tag="Geometry"><span lang="ko"># 수학 (도형)</span><span lang="en"># Math (Geometry)</span></button>
+        <button class="filter-chip chip-lang" data-tag="language"><span lang="ko"># 영어 / 국어</span><span lang="en"># English / Korean</span></button>
+        <button class="filter-chip chip-arts" data-tag="arts"><span lang="ko"># 음악 / 미술</span><span lang="en"># Music / Art</span></button>
+        <button class="filter-chip chip-class" data-tag="kingclass"><span lang="ko"># 학급운영</span><span lang="en"># Classroom</span></button>
       </div>
       <div class="game-grid" id="game-grid">
-        <div class="grid-empty">게임 데이터를 불러오는 중...</div>
+        <div class="grid-empty"><span lang="ko">게임 데이터를 불러오는 중...</span><span lang="en">Loading content...</span></div>
       </div>
       <div style="text-align:center;margin-top:3.5rem" class="reveal">
-        <a href="https://www.킹수학.com" target="_blank" class="btn-primary" style="font-size:1rem;padding:15px 38px">🎮 전체 콘텐츠 플레이하기</a>
+        <a href="https://www.킹수학.com" target="_blank" class="btn-primary" style="font-size:1rem;padding:15px 38px"><span lang="ko">🎮 전체 콘텐츠 플레이하기</span><span lang="en">🎮 Play All Content</span></a>
       </div>
     </div>
   </section>
@@ -2345,32 +2476,32 @@
           <img src="https://킹수학.com/logo.png" alt="킹수학 로고" onerror="this.style.display='none'">
           <span class="footer-logo-text">킹수학.com</span>
         </div>
-        <p class="footer-desc">선생님이 직접 만든 안전하고 유익한<br>교실 속 에듀테크 플랫폼입니다.</p>
-        <a href="https://www.킹수학.com" target="_blank" class="footer-link">킹수학 바로가기 →</a>
+        <p class="footer-desc"><span lang="ko">선생님이 직접 만든 안전하고 유익한<br>교실 속 에듀테크 플랫폼입니다.</span><span lang="en">A safe, beneficial edtech platform<br>made by a teacher, for the classroom.</span></p>
+        <a href="https://www.킹수학.com" target="_blank" class="footer-link"><span lang="ko">킹수학 바로가기 →</span><span lang="en">Go to KingsMath →</span></a>
       </div>
       <div>
         <h4>Developer</h4>
         <ul>
-          <li>👤 개발자: <strong>킹선생</strong></li>
-          <li>🏆 <strong>2026 i-Scream 바이브코딩 공모전 최우수상</strong></li>
-          <li>🎤 바이브 코딩 및 교육용 플랫폼 구축 연수 다수 진행</li>
+          <li><span lang="ko">👤 개발자: <strong>킹선생</strong></span><span lang="en">👤 Developer: <strong>King Teacher</strong></span></li>
+          <li>🏆 <strong>2026 i-Scream <span lang="ko">바이브코딩 공모전 최우수상</span><span lang="en">Vibe Coding Contest Grand Prize</span></strong></li>
+          <li><span lang="ko">🎤 바이브 코딩 및 교육용 플랫폼 구축 연수 다수 진행</span><span lang="en">🎤 Frequently gives training on vibe coding and building educational platforms</span></li>
           <li style="display:block;padding-top:4px">
             <a href="https://canva.link/kingsmath3hr" target="_blank"
               style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:10px;padding:9px 13px;color:rgba(255,255,255,0.65);text-decoration:none;font-size:0.8rem;font-weight:700;transition:border-color 0.2s"
               onmouseover="this.style.borderColor='rgba(255,214,0,0.38)'"
               onmouseout="this.style.borderColor='rgba(255,255,255,0.09)'">
-              📄 연수 계획안 예시 보기 →
+              <span lang="ko">📄 연수 계획안 예시 보기 →</span><span lang="en">📄 View a Sample Training Plan →</span>
             </a>
-            <p style="margin-top:5px;font-size:0.73rem;color:rgba(255,255,255,0.28)">* 바이브 코딩으로 혁신하는 학급운영 (3시간/원격/대면)
+            <p style="margin-top:5px;font-size:0.73rem;color:rgba(255,255,255,0.28)"><span lang="ko">* 바이브 코딩으로 혁신하는 학급운영 (3시간/원격/대면)</span><span lang="en">* Reinventing Classroom Management with Vibe Coding (3 hrs / remote or in-person)</span>
             </p>
           </li>
         </ul>
       </div>
       <div>
         <h4>Contact</h4>
-        <p style="font-size:0.83rem;color:rgba(255,255,255,0.38);margin-bottom:0.9rem;line-height:1.75">버그 신고 / 아이디어 소개
-          / 연수 문의는<br>카카오톡으로 편하게 연락주세요.</p>
-        <a href="https://open.kakao.com/o/sLaZ7O9h" target="_blank" class="kakao-btn">💬 1:1 문의하기</a>
+        <p style="font-size:0.83rem;color:rgba(255,255,255,0.38);margin-bottom:0.9rem;line-height:1.75"><span lang="ko">버그 신고 / 아이디어 소개
+          / 연수 문의는<br>카카오톡으로 편하게 연락주세요.</span><span lang="en">For bug reports, idea suggestions, or training inquiries,<br>feel free to reach out via KakaoTalk.</span></p>
+        <a href="https://open.kakao.com/o/sLaZ7O9h" target="_blank" class="kakao-btn"><span lang="ko">💬 1:1 문의하기</span><span lang="en">💬 Chat with Us</span></a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -2383,21 +2514,50 @@
   <script src="games-data-ko-ex.js"></script>
 
   <script>
+    // ── 언어 전환 (한국어 / English) ──
+    var currentLang = document.documentElement.lang === 'en' ? 'en' : 'ko';
+
+    function updateDateEls() {
+      var today = new Date();
+      var koEl = document.getElementById('current-date-ko');
+      var enEl = document.getElementById('current-date-en');
+      if (koEl) koEl.textContent = today.getFullYear() + '년 ' + (today.getMonth() + 1) + '월 ' + today.getDate() + '일 현재';
+      if (enEl) {
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        enEl.textContent = 'As of ' + months[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear();
+      }
+      ['dynamic-game-count-ko', 'dynamic-game-count-en'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = '300+';
+      });
+    }
+
+    function setLang(lang) {
+      currentLang = lang === 'en' ? 'en' : 'ko';
+      document.documentElement.lang = currentLang;
+      document.documentElement.classList.toggle('lang-en', currentLang === 'en');
+      document.title = currentLang === 'en' ? 'Introducing KingsMath' : '킹수학을 소개합니다';
+      try { localStorage.setItem('kingsmath-lang', currentLang); } catch (e) {}
+      document.querySelectorAll('.lang-btn').forEach(function (b) {
+        b.classList.toggle('active', b.dataset.lang === currentLang);
+      });
+      var activeChip = document.querySelector('.filter-chip.active');
+      renderGameGrid(activeChip ? activeChip.dataset.tag : 'all');
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
 
       // ── 아이콘 초기화 (lucide 있으면)
       if (typeof lucide !== 'undefined') lucide.createIcons();
 
-      // ── 오늘 날짜
-      const today = new Date();
-      const dateEl = document.getElementById('current-date');
-      if (dateEl) dateEl.textContent = today.getFullYear() + '년 ' + (today.getMonth() + 1) + '월 ' + today.getDate() + '일 현재';
+      // ── 언어 토글 버튼
+      document.querySelectorAll('.lang-btn').forEach(function (b) {
+        b.classList.toggle('active', b.dataset.lang === currentLang);
+        b.addEventListener('click', function () { setLang(b.dataset.lang); });
+      });
 
-      // ── 게임 개수 300+ 고정
-      const countEl = document.getElementById('dynamic-game-count');
-      if (countEl) {
-        countEl.textContent = '300+';
-      }
+      // ── 오늘 날짜
+      updateDateEls();
 
       // ── 히어로 슬라이드 (원본 이미지 파일명 그대로)
       const slideImages = ['slide-photo-1.jpg', 'student-photo-2.jpg', 'slide-photo-3.jpg'];
@@ -2452,18 +2612,27 @@
         }
 
         if (games.length === 0) {
-          grid.innerHTML = '<div class="grid-empty">해당 조건에 맞는 콘텐츠가 없습니다.<br>다른 태그를 선택해보세요.</div>';
+          grid.innerHTML = currentLang === 'en'
+            ? '<div class="grid-empty">No content matches this filter.<br>Try a different tag.</div>'
+            : '<div class="grid-empty">해당 조건에 맞는 콘텐츠가 없습니다.<br>다른 태그를 선택해보세요.</div>';
           return;
         }
 
+        var catLabels = currentLang === 'en'
+          ? { other: 'Creative Play', math: 'Math', en: 'English', kr: 'Korean', cls: 'Classroom', arts: 'Arts/PE' }
+          : { other: '창의·놀이', math: '수학', en: '영어', kr: '국어', cls: '학급운영', arts: '예체능' };
+        var wholeClassLabel = currentLang === 'en' ? 'Whole class' : '학급전체';
+        var playersUnit = currentLang === 'en' ? ' players' : '명';
+        var playLabel = currentLang === 'en' ? '▶ Play' : '▶ 플레이';
+
         grid.innerHTML = games.map(function (game) {
           var url = game.link.startsWith('http') ? game.link : 'https://킹수학.com' + (game.link.startsWith('/') ? '' : '/') + game.link;
-          var cat = '창의·놀이', catClass = 'cat-other';
-          if (game.tags.includes('Numbers') || game.tags.includes('Geometry') || game.tags.includes('Measurement') || game.tags.includes('Patterns') || game.tags.includes('Data')) { cat = '수학'; catClass = 'cat-math'; }
-          else if (game.tags.includes('kingen')) { cat = '영어'; catClass = 'cat-lang'; }
-          else if (game.tags.includes('kingkr')) { cat = '국어'; catClass = 'cat-lang'; }
-          else if (game.tags.includes('kingclass')) { cat = '학급운영'; catClass = 'cat-class'; }
-          else if (game.tags.includes('music') || game.tags.includes('kingph')) { cat = '예체능'; catClass = 'cat-arts'; }
+          var cat = catLabels.other, catClass = 'cat-other';
+          if (game.tags.includes('Numbers') || game.tags.includes('Geometry') || game.tags.includes('Measurement') || game.tags.includes('Patterns') || game.tags.includes('Data')) { cat = catLabels.math; catClass = 'cat-math'; }
+          else if (game.tags.includes('kingen')) { cat = catLabels.en; catClass = 'cat-lang'; }
+          else if (game.tags.includes('kingkr')) { cat = catLabels.kr; catClass = 'cat-lang'; }
+          else if (game.tags.includes('kingclass')) { cat = catLabels.cls; catClass = 'cat-class'; }
+          else if (game.tags.includes('music') || game.tags.includes('kingph')) { cat = catLabels.arts; catClass = 'cat-arts'; }
           var tagTexts = '';
           if (typeof categoryList !== 'undefined') {
             tagTexts = game.tags.slice(0, 3).map(function (tagId) {
@@ -2476,13 +2645,20 @@
             + '<span class="game-cat ' + catClass + '">' + cat + '</span>'
             + '<div class="game-title">' + game.title.ko + '</div>'
             + (tagTexts ? '<div style="font-size:0.75rem;color:rgba(255,255,255,0.35);margin-bottom:2px">' + tagTexts + '</div>' : '')
-            + '<div class="game-meta"><span>👥 ' + (game.players ? game.players + '명' : '학급전체') + '</span><span class="game-play">▶ 플레이</span></div>'
+            + '<div class="game-meta"><span>👥 ' + (game.players ? game.players + playersUnit : wholeClassLabel) + '</span><span class="game-play">' + playLabel + '</span></div>'
             + '</div></a>';
         }).join('');
 
       } else {
         // gameData 없을 때 샘플
-        var sample = [
+        var sample = currentLang === 'en' ? [
+          { title: 'KingsMath Battle', cat: 'Math', cc: 'cat-math', players: '4-6 players', href: 'https://kingsmath.com' },
+          { title: 'Time Attack Calc King', cat: 'Math', cc: 'cat-math', players: 'Solo', href: 'https://kingsmath.com' },
+          { title: 'KingThesizer', cat: 'Music', cc: 'cat-arts', players: 'Solo', href: 'https://kingsmath.com/smart_kingthesizer/' },
+          { title: 'English Word Battle', cat: 'English', cc: 'cat-lang', players: '4 players', href: 'https://kingsmath.com' },
+          { title: 'Class Timer', cat: 'Classroom', cc: 'cat-class', players: 'Whole class', href: 'https://kingsmath.com' },
+          { title: 'Omok Mobile', cat: 'Other', cc: 'cat-other', players: '2 players', href: 'https://kingsmath.com' }
+        ] : [
           { title: '킹수학 배틀', cat: '수학', cc: 'cat-math', players: '4-6명', href: 'https://kingsmath.com' },
           { title: '타임어택 계산왕', cat: '수학', cc: 'cat-math', players: '개인', href: 'https://kingsmath.com' },
           { title: '킹디사이저', cat: '음악', cc: 'cat-arts', players: '개인', href: 'https://kingsmath.com/smart_kingthesizer/' },
@@ -2498,12 +2674,13 @@
           'https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&q=80&w=400',
           'https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&q=80&w=400'
         ];
+        var playLabelSample = currentLang === 'en' ? '▶ Play' : '▶ 플레이';
         grid.innerHTML = sample.map(function (g, i) {
           return '<a href="' + g.href + '" target="_blank" class="game-card">'
             + '<div class="game-info">'
             + '<span class="game-cat ' + g.cc + '">' + g.cat + '</span>'
             + '<div class="game-title">' + g.title + '</div>'
-            + '<div class="game-meta"><span>👥 ' + g.players + '</span><span class="game-play">▶ 플레이</span></div>'
+            + '<div class="game-meta"><span>👥 ' + g.players + '</span><span class="game-play">' + playLabelSample + '</span></div>'
             + '</div></a>';
         }).join('');
       }
