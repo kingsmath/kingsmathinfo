@@ -24,6 +24,8 @@
     })();
   </script>
   <title>킹수학을 소개합니다</title>
+  <meta name="author" content="박대현">
+  <meta name="description" content="현직 초등교사 박대현이 바이브 코딩으로 만든 전자칠판 학습 게임 플랫폼, 킹수학을 소개합니다.">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&display=swap"
     rel="stylesheet">
   <style>
@@ -788,6 +790,47 @@
 
     .story-text a:hover {
       border-color: var(--king-yellow);
+    }
+
+    /* 제작자 카드 — 이야기 첫머리에 작게 */
+    .maker-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: fit-content;
+      max-width: 100%;
+      padding: 10px 20px 10px 10px;
+      margin: 0.2rem 0 1.8rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 999px;
+    }
+
+    .maker-card img {
+      width: 56px;
+      height: 56px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 214, 0, 0.55);
+    }
+
+    .maker-name {
+      font-size: 1rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    .maker-role {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.55);
+      line-height: 1.4;
+    }
+
+    .story-text .maker-link {
+      font-size: 0.78rem;
+      border-bottom: none;
     }
 
     .story-note {
@@ -1990,15 +2033,15 @@
         <p class="hero-tags"><span lang="ko">#무광고 &nbsp;#무가입 &nbsp;#무설치 &nbsp;#무료</span><span lang="en">#NoAds &nbsp;#NoSignup &nbsp;#NoInstall &nbsp;#Free</span></p>
         <p class="hero-desc">
           <span lang="ko">
-            <strong>Global No.1 세계 최초, 세계 최고 전자칠판 학습도구 플랫폼</strong><br>
-            수학은 물론 <span class="hl">영어, 국어, 사회, 예체능 및 학급운영</span>까지!<br>
-            <span class="hl">바이브 코딩</span>의 좋은 예시!<br>
+            <strong>교실 전자칠판을 위한 올인원 학습도구 플랫폼</strong><br>
+            수학은 물론 <span class="hl">영어, 국어, 사회, 과학, 예체능, 학급운영</span>까지!<br>
+            교실에서 필요했던 것을 <span class="hl">바이브 코딩</span>으로 하나하나 직접 만들었습니다.<br>
             자투리 수업시간? <strong>킹수학 하나면 끝.</strong>
           </span>
           <span lang="en">
-            <strong>Global No.1 — The World's First and Best Interactive Whiteboard Learning Platform</strong><br>
-            Beyond math — <span class="hl">English, Korean, social studies, arts/PE and classroom management</span> too!<br>
-            A great example of <span class="hl">vibe coding</span>!<br>
+            <strong>An All-in-One Learning Platform for Classroom Whiteboards</strong><br>
+            Beyond math — <span class="hl">English, Korean, social studies, science, arts/PE and classroom management</span> too!<br>
+            Everything my classroom needed, built one by one through <span class="hl">vibe coding</span>.<br>
             A few spare minutes in class? <strong>KingsMath has you covered.</strong>
           </span>
         </p>
@@ -2061,8 +2104,8 @@
         <div class="desc"><span lang="ko">이용 요금</span><span lang="en">Cost to Use</span></div>
       </div>
       <div class="stat-item">
-        <div class="num display-font"><span lang="ko">1위</span><span lang="en">#1</span></div>
-        <div class="desc"><span lang="ko">세계 최초 전자칠판 플랫폼</span><span lang="en">World's First Whiteboard Platform</span></div>
+        <div class="num display-font"><span lang="ko">1인</span><span lang="en">1</span></div>
+        <div class="desc"><span lang="ko">현직 교사 1인 개발</span><span lang="en">Teacher Who Built It All</span></div>
       </div>
     </div>
   </div>
@@ -2091,8 +2134,8 @@
           <div class="hl-content">
             <div class="hl-icon ic-cyan">📚</div>
             <h3 class="hl-title"><span lang="ko">수학을 넘어 전 과목까지</span><span lang="en">Beyond Math — Every Subject</span></h3>
-            <p class="hl-desc"><span lang="ko">수학 게임을 많이 만들다 보니 다른 과목도 만들면 좋겠더라구요. 영어, 국어, 사회, 과학, 음악, 미술, 학급운영 도구까지! 시작은 수학했지만 끝은
-              교육했습니다.</span><span lang="en">After making so many math games, I figured other subjects deserved the same treatment — English, Korean, social studies, science, music, art, even classroom management tools! I started with math, but ended up covering all of education.</span></p>
+            <p class="hl-desc"><span lang="ko">수학 게임을 많이 만들다 보니 다른 과목도 만들면 좋겠더라고요. 영어, 국어, 사회, 과학, 음악, 미술, 학급운영 도구까지! 시작은 수학이었는데,
+              끝은 교실 전체가 됐습니다.</span><span lang="en">After making so many math games, I figured other subjects deserved the same treatment — English, Korean, social studies, science, music, art, even classroom management tools! It started with math, and ended up covering the whole classroom.</span></p>
           </div>
         </div>
         <div class="hl-card reveal" style="transition-delay:.2s">
@@ -2101,7 +2144,7 @@
           <div class="hl-content">
             <div class="hl-icon ic-purple">🌐</div>
             <h3 class="hl-title"><span lang="ko">16개국 언어 지원</span><span lang="en">Supports 16 Languages</span></h3>
-            <p class="hl-desc"><span lang="ko">영어, 일본어, 중국어, 베트남어 등 16개국 언어를 완벽하게 지원합니다. K-교육자료의 힘을 보여주겠습니다! 외국 친구 있으면 소개 좀 해주세요. 😅</span><span lang="en">English, Japanese, Chinese, Vietnamese, and more — 16 languages, fully supported. Time to show the world the power of K-edu content! If you know anyone abroad, please spread the word. 😅</span></p>
+            <p class="hl-desc"><span lang="ko">영어, 일본어, 중국어, 베트남어 등 16개국 언어를 지원합니다. K-교육자료의 힘을 보여주겠습니다! 외국 친구 있으면 소개 좀 해주세요. 😅</span><span lang="en">English, Japanese, Chinese, Vietnamese, and more — 16 languages supported. Time to show the world the power of K-edu content! If you know anyone abroad, please spread the word. 😅</span></p>
           </div>
         </div>
       </div>
@@ -2116,28 +2159,37 @@
           <div class="section-label sl-cyan">👨‍💻 DEVELOPER STORY</div>
           <h2 class="section-title"><span lang="ko">외국산 게임이<br>아쉬워서 시작했습니다</span><span lang="en">It Started Because Foreign Games<br>Weren't Quite Enough</span></h2>
 
-    <div lang="ko" class="lang-block">
-    <p>저는 대한민국의 초등학교에 근무하고 있는 <strong>20년 차 현직 초등 교사</strong>입니다. 2025년 겨울, 인스타그램 피드에서 여러 학생이 전자칠판으로 수학 게임을 하는 모습을 보았습니다. 외국 프로그램이었는데, 마침 우리 교실에도 신형 전자칠판이 있어 게임 링크를 구해 우리 반 학생들과 함께 해보았죠. 학생들이 정말 좋아하더라고요. 그런데 제가 4학년 담임을 맡고 있다 보니, 뺄셈 문제에서 음수가 나오거나 한국어 지원이 되지 않는 점 등이 아쉽게 느껴졌습니다.</p>
+          <div class="maker-card">
+            <img src="parkdaehyeon.png" alt="킹수학 제작자 박대현" width="56" height="56" loading="lazy">
+            <div>
+              <div class="maker-name"><span lang="ko">박대현</span><span lang="en">Park Daehyeon</span></div>
+              <div class="maker-role"><span lang="ko">현직 초등교사 · 킹수학 제작자</span><span lang="en">Elementary school teacher · Creator of KingsMath</span></div>
+              <a class="maker-link" href="https://parkdaehyeon.com" target="_blank" rel="noopener">parkdaehyeon.com ↗</a>
+            </div>
+          </div>
 
-    <p>마침 '바이브 코딩'이라는 단어가 뉴스에 많이 나올 때였습니다. <strong>'공부한다 생각하고 4학년 교육과정에 맞춰 한국어판으로 한번 만들어볼까?'</strong> 하는 가벼운 마음으로 시도해 봤는데, 어라? 생각보다 비슷하게 구현되더라고요. 그렇게 바이브 코딩으로 만든 첫 번째 게임이 바로 <a href="https://xn--9p4bn1ysod.com/kingmath/" target="_blank">킹수학 배틀</a>이었습니다.</p>
+          <div lang="ko" class="lang-block">
+            <p>저는 대한민국의 초등학교에 근무하고 있는 <strong>20년 차 현직 초등교사</strong>입니다. 2025년 겨울, 인스타그램 피드에서 여러 학생이 전자칠판으로 수학 게임을 하는 모습을 보았습니다. 외국 프로그램이었는데, 마침 우리 교실에도 신형 전자칠판이 있어 게임 링크를 구해 우리 반 학생들과 함께 해보았죠. 학생들이 정말 좋아하더라고요. 그런데 4학년 담임을 맡고 있다 보니, 뺄셈 문제에서 음수가 나오거나 한국어가 지원되지 않는 점 등이 아쉽게 느껴졌습니다.</p>
 
-    <p>그 이후로 <strong>'설마 이것도 될까?'</strong> 하는 마음으로 끊임없이 질문하고 연구하며 아이디어를 하나하나 게임으로 개발했습니다. 그렇게 하다 보니 어느덧 <strong>400개가 넘는 게임을 보유한 '킹수학'</strong>이 되었습니다. 나중에는 바이브 코딩 도파민에 빠져서 멈출 수가 없더라고요. ㅎㅎㅎ</p>
+            <p>마침 '바이브 코딩'이라는 말이 뉴스에 자주 나올 때였습니다. <strong>'공부한다 생각하고 4학년 교육과정에 맞춘 한국어판을 한번 만들어볼까?'</strong> 하는 가벼운 마음으로 시도해 봤는데, 어라? 생각보다 그럴듯하게 만들어지더라고요. 그렇게 바이브 코딩으로 만든 첫 번째 게임이 바로 <a href="https://xn--9p4bn1ysod.com/kingmath/" target="_blank">킹수학 배틀</a>입니다.</p>
 
-<p>킹수학은 기획, 개발, 디자인, 유지보수까지 모든 과정을 <strong>1인이 직접 총괄하고 운영하는 독립 프로젝트</strong>입니다. 초창기부터 300개 정도까지는 단순 무식 <strong>오직 구글 제미나이 채팅창만을 사용</strong>했습니다. 그러다 2026년 중반 안티그래비티(Antigravity) 2.0이 나온 후부터는 구글의 안티그래비티와 클로드(Claude) 등을 함께 활용하며, 상황에 맞춰 다양한 도구를 유연하게 사용하고 있습니다.</p>
+            <p>그 뒤로 <strong>'설마 이것도 될까?'</strong> 하는 마음으로 끊임없이 묻고 연구하며 아이디어를 하나하나 게임으로 만들었습니다. 만들수록 바이브 코딩의 재미에 빠져 멈출 수가 없더라고요. ㅎㅎ 그렇게 어느덧 <strong>400개가 넘는 게임을 갖춘 '킹수학'</strong>이 되었습니다.</p>
 
-<p>그리고 지금은 킹수학 혼자만의 공간을 넘어, <strong>훌륭한 선생님들이 엄선한 프로그램을 함께 소개</strong>하기 시작했습니다. <strong>'명장킹'</strong>을 통해 멋진 제작자 선생님들의 프로그램도 안내하고 있습니다.</p>
-    </div>
-    <div lang="en" class="lang-block">
-    <p>I'm a <strong>20-year elementary school teacher</strong> in South Korea. In the winter of 2025, I saw a video on my Instagram feed of students playing math games on an interactive whiteboard. It was a foreign program, and since my own classroom had a new whiteboard, I got the link and tried it with my students. They loved it. But since I teach 4th grade, a few things bothered me — like subtraction problems producing negative numbers, and no Korean language support.</p>
+            <p>킹수학은 기획, 개발, 디자인, 유지보수까지 <strong>모든 과정을 제가 혼자 맡아 운영하는 개인 프로젝트</strong>입니다. 처음부터 300개 정도까지는 <strong>오직 구글 제미나이(Gemini) 채팅창 하나로만</strong> 만들었습니다. 2026년 중반 안티그래비티(Antigravity) 2.0이 나온 뒤로는 안티그래비티와 클로드(Claude) 등을 함께 쓰며, 상황에 맞는 도구를 골라 쓰고 있습니다.</p>
 
-    <p>Around that time, the term "vibe coding" was all over the news. <strong>Thinking of it as a study exercise, I tried building a Korean version tailored to the 4th grade curriculum</strong> — and to my surprise, it came together better than expected. That first game, built through vibe coding, was <a href="https://xn--9p4bn1ysod.com/kingmath/" target="_blank">KingsMath Battle</a>.</p>
+            <p>그리고 지금은 혼자만의 공간을 넘어, <strong>훌륭한 선생님들의 프로그램을 엄선해 함께 소개</strong>하고 있습니다. <strong>'명장킹'</strong>에서 멋진 제작자 선생님들의 작품을 만나 보세요.</p>
+          </div>
+          <div lang="en" class="lang-block">
+            <p>I'm an <strong>elementary school teacher in South Korea with 20 years in the classroom</strong>. In the winter of 2025, I saw a video on my Instagram feed of students playing math games on an interactive whiteboard. It was a foreign program, and since my own classroom had a new whiteboard, I got the link and tried it with my students. They loved it. But since I teach 4th grade, a few things bothered me — like subtraction problems producing negative numbers, and no Korean language support.</p>
 
-    <p>From there, I kept asking <strong>"could this work too?"</strong>, researching constantly and turning ideas into games one by one. Before I knew it, <strong>KingsMath had grown into a platform with over 400 games</strong>. Eventually I got hooked on the dopamine rush of vibe coding and just couldn't stop. Haha.</p>
+            <p>Around that time, the term "vibe coding" was all over the news. <strong>Thinking of it as a study exercise, I tried building a Korean version tailored to the 4th grade curriculum</strong> — and to my surprise, it came together better than expected. That first game, built through vibe coding, was <a href="https://xn--9p4bn1ysod.com/kingmath/" target="_blank">KingsMath Battle</a>.</p>
 
-    <p>KingsMath started as an independent project — planning, development, design, and maintenance all handled solely by <strong>"King Teacher."</strong> From the very beginning up to around game #300, I simply <strong>used only the Google Gemini chat window</strong>. Then, after Antigravity 2.0 launched in mid-2026, I began using Google's Antigravity alongside Claude and other tools, flexibly mixing and matching whatever fit the situation.</p>
+            <p>From there, I kept asking <strong>"could this work too?"</strong>, researching constantly and turning ideas into games one by one. The more I built, the more hooked I got on vibe coding — I just couldn't stop. Haha. Before I knew it, <strong>KingsMath had grown into a platform with over 400 games</strong>.</p>
 
-    <p>And now, KingsMath has grown beyond a one-person space — I've started <strong>featuring hand-picked programs from other talented teachers</strong> too. Through <strong>"Master King,"</strong> I'm introducing programs from amazing creator-teachers as well.</p>
-    </div>
+            <p>KingsMath is a <strong>personal project I run entirely on my own</strong> — planning, development, design, and maintenance. From the very beginning up to around game #300, I <strong>used nothing but the Google Gemini chat window</strong>. After Antigravity 2.0 launched in mid-2026, I began using Antigravity alongside Claude and other tools, picking whatever fits the job.</p>
+
+            <p>And now, KingsMath has grown beyond a one-person space — I've started <strong>featuring hand-picked programs from other talented teachers</strong> too. Check out their work in <strong>"Master King."</strong></p>
+          </div>
           <div class="story-note"><span lang="ko">명장킹에 함께할 제작자 선생님을 기다립니다. 아래 버튼을 눌러 자세한 소개를 확인해 보세요.</span><span lang="en">Looking for creator-teachers to join Master King. Click the button below for details.</span></div>
           <div class="story-cta">
             <a href="https://mjking.netlify.app/" target="_blank" class="btn-small"><span lang="ko">명장킹 제작자 선생님 모집 페이지 보기</span><span lang="en">See the Master King Creator Recruitment Page</span></a>
@@ -2229,7 +2281,7 @@
       <div class="features-grid">
         <div class="feat-card reveal"><span class="feat-icon">🚫</span>
           <h3 class="feat-title">무광고 (No Ads)</h3>
-          <p class="feat-desc"><span lang="ko">야한 광고, 게임 광고 없어요.<br><strong>안심하고 쓰세요.</strong></span><span lang="en">No inappropriate ads, no game ads.<br><strong>Use it worry-free.</strong></span></p>
+          <p class="feat-desc"><span lang="ko">선정적인 광고, 게임 광고 없어요.<br><strong>안심하고 쓰세요.</strong></span><span lang="en">No inappropriate ads, no game ads.<br><strong>Use it worry-free.</strong></span></p>
         </div>
         <div class="feat-card reveal" style="transition-delay:.08s"><span class="feat-icon">🙅</span>
           <h3 class="feat-title">무가입 (No Sign-up)</h3>
@@ -2390,7 +2442,7 @@
             </div>
           </div>
           <div class="tl-item">
-            <div class="tl-dot dot-yellow"></div>
+            <div class="tl-dot dot-blue"></div>
             <div class="tl-card">
               <div class="tl-year ty-blue"><span lang="ko">2026년 6월 22일</span><span lang="en">June 22, 2026</span></div>
               <h3><span lang="ko">게임 및 웹앱 제작 업로드 300개 돌파</span><span lang="en">Surpassed 300 games and web apps created</span></h3>
@@ -2464,13 +2516,14 @@
           <img src="https://킹수학.com/logo.png" alt="킹수학 로고" onerror="this.style.display='none'">
           <span class="footer-logo-text">킹수학.com</span>
         </div>
-        <p class="footer-desc"><span lang="ko">선생님이 직접 만든 안전하고 유익한<br>교실 속 에듀테크 플랫폼입니다.</span><span lang="en">A safe, beneficial edtech platform<br>made by a teacher, for the classroom.</span></p>
+        <p class="footer-desc"><span lang="ko">현직 초등교사가 직접 만든 안전하고 유익한<br>교실 속 에듀테크 플랫폼입니다.</span><span lang="en">A safe, beneficial edtech platform<br>made by a classroom teacher, for the classroom.</span></p>
         <a href="https://www.킹수학.com" target="_blank" class="footer-link"><span lang="ko">킹수학 바로가기 →</span><span lang="en">Go to KingsMath →</span></a>
       </div>
       <div>
         <h4>Developer</h4>
         <ul>
-          <li><span lang="ko">👤 개발자: <strong>킹수학</strong></span><span lang="en">👤 Developer: <strong>King Teacher</strong></span></li>
+          <li><span lang="ko">👤 만든 사람: <strong>박대현</strong> (현직 초등교사)</span><span lang="en">👤 Created by <strong>Park Daehyeon</strong> (elementary school teacher)</span></li>
+          <li>🏠 <a href="https://parkdaehyeon.com" target="_blank" rel="noopener" class="footer-link">parkdaehyeon.com</a></li>
           <li>🏆 <strong>2026 i-Scream <span lang="ko">바이브코딩 공모전 최우수상</span><span lang="en">Vibe Coding Contest Grand Prize</span></strong></li>
           <li><span lang="ko">🎤 바이브 코딩 및 교육용 플랫폼 구축 연수 다수 진행</span><span lang="en">🎤 Frequently gives training on vibe coding and building educational platforms</span></li>
           <li style="display:block;padding-top:4px">
